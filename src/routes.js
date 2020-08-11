@@ -1,7 +1,8 @@
 import React from 'react';
 import Home from './pages/Home/Home';
-import Home2 from './pages/Home/Home2';
+import Book from './pages/Book/Book';
 import About from './pages/About/About';
+import HookDemo from './pages/HookDemo/HookDemo';
 import NotFound from './pages/NotFound/NotFound';
 
 const routes = [
@@ -11,14 +12,19 @@ const routes = [
     main: () => <Home />
   },
   {
-    path: '/home2',
+    path: '/book',
     exact: true,
-    main: () => <Home2 />
+    main: () => <Book />
   },
   {
     path: '/about',
     exact: false,
     main: () => <About />
+  },
+  {
+    path: '/hook-demo',
+    exact: false,
+    main: () => <HookDemo />
   },
   {
     path: '',

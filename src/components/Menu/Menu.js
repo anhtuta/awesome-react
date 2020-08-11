@@ -8,8 +8,18 @@ const menus = [
     exact: true
   },
   {
+    name: 'Book',
+    to: '/book',
+    exact: true
+  },
+  {
     name: 'About',
     to: '/about',
+    exact: true
+  },
+  {
+    name: 'HookDemo',
+    to: '/hook-demo',
     exact: true
   }
 ];
