@@ -37,6 +37,27 @@ class Book extends PureComponent {
       });
   };
 
+  getBooks2 = async (params) => {
+    this.setState({ loading: true });
+    const newParams = { ...this.state.params, ...params };
+    this.setState({
+      params: newParams
+    });
+    try {
+      const res = await BookService.getBooks(newParams);
+      this.setState({
+        bookData: res.data,
+        totalCount: res.meta,
+        loading: false
+      });
+    } catch (err) {
+      console.log(err);
+      this.setState({
+        loading: false
+      });
+    }
+  };
+
   columns = [
     {
       Header: 'Title',
@@ -72,7 +93,7 @@ class Book extends PureComponent {
           columns={this.columns}
           data={bookData}
           loading={loading}
-          onFetchData={this.getBooks}
+          onFetchData={this.getBooks2}
           className="book-table"
           defaultPageSize={10}
         />

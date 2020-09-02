@@ -2,7 +2,7 @@ import React from 'react';
 import Home from './pages/Home/Home';
 import Book from './pages/Book/Book';
 import About from './pages/About/About';
-import HookDemo from './pages/HookDemo/HookDemo';
+import HookDemo from './pages/HookDemo/HookDemo2';
 import NotFound from './pages/NotFound/NotFound';
 
 const routes = [
