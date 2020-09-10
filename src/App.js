@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Menu from './components/Menu/Menu';
-import routes from './routes';
+import Nav from './components/Nav/Nav';
+import routes from './Routes';
 import { Switch, Route, HashRouter } from 'react-router-dom';
 import './scss/App.scss';
 
@@ -9,7 +9,7 @@ class App extends Component {
     return (
       <HashRouter>
         <div className="app">
-          <Menu />
+          <Nav />
           <div className="container">
             <div className="row">{this.showContentMenus(routes)}</div>
           </div>
