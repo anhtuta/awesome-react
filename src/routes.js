@@ -4,6 +4,7 @@ import Book from './pages/Book/Book';
 import About from './pages/About/About';
 import HookDemo from './pages/HookDemo/HookDemo2';
 import NotFound from './pages/NotFound/NotFound';
+import Loading, { Login } from './components/Loading/Loading';
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     path: '/hook-demo',
     exact: false,
     main: () => <HookDemo />
+  },
+  {
+    path: '/login',
+    exact: false,
+    main: () => <Login />
   },
   {
     path: '',
