@@ -10,7 +10,6 @@ const Clock = () => {
   useEffect(() => {
     if (timerID === null) {
       timerID = setInterval(() => setDate(new Date()), 1000);
-      console.log('vaoday');
     }
     return () => {
       clearInterval(timerID);

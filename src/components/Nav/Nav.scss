@@ -1,0 +1,46 @@
+.custom-navbar {
+  position: relative;
+  .nav-wrapper {
+    .menu-item {
+      display: inline-block;
+      padding: 5px;
+      a {
+        color: #2199f9;
+        text-decoration: none;
+        transition: 0.3s;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .active-menu {
+      background: #2199f9;
+      color: #fff;
+      transition: 0.3s;
+      a {
+        color: #fff;
+      }
+    }
+
+    .menu-parent {
+      color: #2199f9;
+      cursor: pointer;
+      position: relative;
+      .menu-children {
+        display: none;
+        position: absolute;
+        left: 0;
+      }
+      &:hover .menu-children {
+        display: flex;
+        min-width: 200px;
+      }
+    }
+  }
+  .userinfo-wrapper {
+    position: absolute;
+    right: 0;
+    top: 5px;
+  }
+}

@@ -84,8 +84,7 @@ class Book extends PureComponent {
   ];
 
   render() {
-    const { bookData, params, loading } = this.state;
-    const { page } = params;
+    const { bookData, loading } = this.state;
     return (
       <div>
         <h2>All book</h2>

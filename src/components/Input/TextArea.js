@@ -1,13 +1,14 @@
 import React, { PureComponent } from 'react';
 import './Input.scss';
 
-const DEFAULT_INPUT_MAX_LENGTH = 200;
+const DEFAULT_INPUT_MAX_LENGTH = 500;
 
-class InputText extends PureComponent {
+class TextArea extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       value: props.value ? props.value : '',
+      length: props.value ? props.value.length : 0,
       errorMsg: ''
     };
   }
@@ -27,7 +28,8 @@ class InputText extends PureComponent {
 
     this.setState({
       value,
-      errorMsg
+      errorMsg,
+      length: value.length
     });
 
     this.props.onChange({
@@ -52,15 +54,14 @@ class InputText extends PureComponent {
 
   render() {
     const {
-      name,
       label,
       disabled = false,
       isRequire = false,
-      type = 'text',
-      placeholder
+      placeholder,
+      maxLength = DEFAULT_INPUT_MAX_LENGTH
     } = this.props;
 
-    const { value, errorMsg } = this.state;
+    const { value, errorMsg, length } = this.state;
 
     return (
       <div className="input-wrapper">
@@ -68,10 +69,8 @@ class InputText extends PureComponent {
           {label}
           {isRequire && <span className="input-require">&nbsp;*</span>}
         </label>
-        <div className="input-text-wrapper">
-          <input
-            type={type}
-            name={name}
+        <div className="input-textarea-wrapper">
+          <textarea
             value={value}
             disabled={disabled}
             onChange={this.onChange}
@@ -79,6 +78,9 @@ class InputText extends PureComponent {
             placeholder={placeholder}
             onKeyPress={this.onKeyPress}
           />
+          <span className={'input-length' + (errorMsg ? ' text-red' : '')}>
+            {length}/{maxLength}
+          </span>
           {!!errorMsg && <div className="input-error-msg">{errorMsg}</div>}
         </div>
       </div>
@@ -86,4 +88,4 @@ class InputText extends PureComponent {
   }
 }
 
-export default InputText;
+export default TextArea;

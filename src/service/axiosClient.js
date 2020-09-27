@@ -16,16 +16,21 @@ const cleanParam = (obj) => {
 const axiosClient = axios.create({
   baseURL: process.env.REACT_APP_HOST_API,
   headers: {
-    'content-type': 'application/json',
-    Pragma: 'no-cache',
-    Authorization: `Bearer ${Cookies.get(ACCESS_TOKEN)}`
+    'content-type': 'application/x-www-form-urlencoded',
+    Pragma: 'no-cache'
   },
-  paramsSerializer: (params) => queryString.stringify(cleanParam(params)),
+  // paramsSerializer: (params) => queryString.stringify(cleanParam(params)),
   withCredentials: true
 });
 
 axiosClient.interceptors.request.use(
   async (config) => {
+    config.data = queryString.stringify(config.data);
+    if (!config.headers.Authorization) {
+      config.headers.Authorization = Cookies.get(ACCESS_TOKEN)
+        ? `Bearer ${Cookies.get(ACCESS_TOKEN)}`
+        : '';
+    }
     return config;
   },
   (error) => {

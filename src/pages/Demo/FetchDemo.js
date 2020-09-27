@@ -3,7 +3,7 @@ import PostList from './PostList';
 import Pagination from './Pagination';
 import queryString from 'query-string';
 
-const HookDemo = () => {
+const FetchDemo = () => {
   const [postList, setPostList] = useState([]);
   const [pagination, setPagination] = useState({
     _page: 1,
@@ -70,4 +70,4 @@ const HookDemo = () => {
   );
 };
 
-export default HookDemo;
+export default FetchDemo;
