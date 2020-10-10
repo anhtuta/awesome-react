@@ -7,7 +7,7 @@ class InputText extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      value: props.value ? props.value : '',
+      value: props.defaultValue ? props.defaultValue : '',
       errorMsg: ''
     };
   }

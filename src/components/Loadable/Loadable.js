@@ -1,5 +1,6 @@
 import React from 'react';
 import Loadable from 'react-loadable';
+import LoadingIcon from './LoadingIcon';
 
 const Loading = (props) => {
   if (props.error) {
@@ -15,11 +16,7 @@ const Loading = (props) => {
       </div>
     );
   } else if (props.pastDelay) {
-    return (
-      <div className="loading-wrapper">
-        <div>Loading...</div>
-      </div>
-    );
+    return <LoadingIcon />;
   } else {
     return null;
   }
