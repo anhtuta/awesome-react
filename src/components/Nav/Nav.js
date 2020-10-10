@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { ROLES } from '../../constants/Constants';
+import { auth } from '../Auth/Auth';
 import './Nav.scss';
 
 // Tạm thời code mới chỉ handle được 2 level
@@ -56,10 +57,13 @@ const ROLE_TABLE = {
 };
 
 class Nav extends Component {
+  handleLogout = () => {
+    auth.logout();
+  };
+
   render() {
     const { userInfo } = this.props;
     const roleArray = userInfo ? userInfo.roleArray : [];
-    console.log(roleArray);
     const activeMenuItems = MENU_ITEMS.filter((item) => {
       if (item.subItems) {
         item.subItems = item.subItems.filter((subItem) =>
@@ -73,12 +77,21 @@ class Nav extends Component {
         <div className="nav-wrapper">{this.generateMenu(activeMenuItems)}</div>
         <div className="userinfo-wrapper">
           {!userInfo && <Link to="/login">Login</Link>}
-          {userInfo && <div>{userInfo.name}</div>}
+          {userInfo && (
+            <div>
+              {userInfo.name} (
+              <span className="logout-link" onClick={this.handleLogout}>
+                Logout
+              </span>
+              )
+            </div>
+          )}
         </div>
       </nav>
     );
   }
 
+  // Những URL nào ko có trong này tức là public, role nào cũng vào được
   rolesHasPermission = (roles, pathname) => {
     if (!ROLE_TABLE[pathname]) return true;
     for (let i = 0; i < roles.length; i++) {

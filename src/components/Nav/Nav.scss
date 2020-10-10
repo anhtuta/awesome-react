@@ -42,5 +42,11 @@
     position: absolute;
     right: 0;
     top: 5px;
+    .logout-link {
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }
