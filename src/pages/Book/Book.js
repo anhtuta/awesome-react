@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import Moment from 'react-moment';
 import Table from '../../components/Table/Table';
+import SearchBox from '../../components/Input/SearchBox';
 import BookService from './BookService';
 
 class Book extends PureComponent {
@@ -83,16 +84,25 @@ class Book extends PureComponent {
     }
   ];
 
+  onSearch = (obj) => {
+    this.getBooks({ searchText: obj.value });
+  };
+
   render() {
     const { bookData, loading } = this.state;
     return (
       <div>
         <h2>All book</h2>
+        <SearchBox
+          name="searchText"
+          // onChange={this.onChange}
+          onSearch={this.onSearch}
+        />
         <Table
           columns={this.columns}
           data={bookData}
           loading={loading}
-          onFetchData={this.getBooks2}
+          onFetchData={this.getBooks}
           className="book-table"
           defaultPageSize={10}
         />

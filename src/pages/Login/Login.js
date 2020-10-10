@@ -4,6 +4,7 @@ import Button from '../../components/Button/Button';
 import InputText from '../../components/Input/InputText';
 import { auth } from '../../components/Auth/Auth';
 import Toast from '../../components/Toast/Toast';
+import './Login.scss';
 
 class Login extends PureComponent {
   constructor(props) {

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import PostList from './PostList';
 import Pagination from './Pagination';
 import queryString from 'query-string';
+import InputText from '../../components/Input/InputText';
 
 const FetchDemo = () => {
   const [postList, setPostList] = useState([]);
@@ -43,8 +44,8 @@ const FetchDemo = () => {
     });
   };
 
-  const handleOnChangeText = (e) => {
-    const text = e.target.value;
+  const handleOnChangeText = (obj) => {
+    const text = obj.value;
     setSearchTerm(text);
 
     // Implement kỹ thuật debounce
@@ -63,7 +64,11 @@ const FetchDemo = () => {
   return (
     <div>
       <h2>Post list</h2>
-      <input type="text" value={searchTerm} onChange={handleOnChangeText} />
+      <InputText
+        value={searchTerm}
+        onChange={handleOnChangeText}
+        placeholder="Search..."
+      />
       <PostList posts={postList} />
       <Pagination pagination={pagination} onPageChange={onPageChange} />
     </div>
