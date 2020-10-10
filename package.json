@@ -20,7 +20,8 @@
     "react-moment": "^0.9.7",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "react-table-v6": "^6.8.6"
+    "react-table-v6": "^6.8.6",
+    "react-toastify": "^6.0.8"
   },
   "scripts": {
     "start": "set PORT=3002 && react-scripts start",

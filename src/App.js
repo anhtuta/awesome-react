@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { auth } from './components/Auth/Auth';
 import PrivateRoute from './components/Auth/PrivateRoute';
 import RestrictedRoute from './components/Auth/RestrictedRoute';
@@ -48,6 +49,7 @@ class App extends Component {
             </Switch>
           </div>
         </div>
+        <ToastContainer />
       </HashRouter>
     );
   }
