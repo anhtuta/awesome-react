@@ -3,12 +3,14 @@ import './Input.scss';
 
 const DEFAULT_INPUT_MAX_LENGTH = 200;
 
-class InputText extends PureComponent {
+class SearchBox extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      value: props.defaultValue ? props.defaultValue : '',
-      errorMsg: ''
+      value: '',
+      errorMsg: '',
+      invalid: false,
+      focus: false
     };
   }
 
@@ -20,9 +22,11 @@ class InputText extends PureComponent {
     let errorMsg = '';
 
     if (value.length > maxLength) {
-      errorMsg = 'Max length of input is: ' + maxLength;
+      errorMsg = 'Max length of search text is: ' + maxLength;
     } else if (!this.regexValidation(value)) {
-      errorMsg = this.props.regexErrorMsg ? this.props.regexErrorMsg : 'Input is invalid';
+      errorMsg = this.props.regexErrorMsg
+        ? this.props.regexErrorMsg
+        : 'Search text is invalid';
     }
 
     this.setState({
@@ -37,12 +41,32 @@ class InputText extends PureComponent {
     });
   };
 
-  onKeyPress = (e) => {
-    const { onKeyPress } = this.props;
-    if (onKeyPress) {
-      onKeyPress(e);
+  onKeyUp = (e, searchText) => {
+    if (e.keyCode === 13) {
+      // Enter
+      this.onSearch(searchText);
     }
   };
+
+  onSearch = (name) => {
+    let { value } = this.state;
+    if (value === '') value = null;
+    this.props.onSearch({ name, value });
+  };
+
+  onClear = (name) => {
+    this.setState({
+      value: ''
+    });
+    this.props.onSearch({ name, value: null });
+  };
+
+  // onKeyPress = (e) => {
+  //   const { onKeyPress } = this.props;
+  //   if (onKeyPress) {
+  //     onKeyPress(e);
+  //   }
+  // };
 
   regexValidation = (value) => {
     const regex = this.props.regex ? this.props.regex : '';
@@ -68,7 +92,11 @@ class InputText extends PureComponent {
           {label}
           {isRequire && <span className="input-require">&nbsp;*</span>}
         </label>
-        <div className="input-text-wrapper">
+        <div className="input-search-wrapper">
+          <i
+            className="fas fa-search input-search-icon"
+            onClick={() => this.onSearch(this.props.name)}
+          ></i>
           <input
             type={type}
             name={name}
@@ -77,7 +105,7 @@ class InputText extends PureComponent {
             onChange={this.onChange}
             className={'input-text' + (!!errorMsg ? 'input-error' : '')}
             placeholder={placeholder}
-            onKeyPress={this.onKeyPress}
+            onKeyUp={this.onKeyUp}
           />
           {!!errorMsg && <div className="input-error-msg">{errorMsg}</div>}
         </div>
@@ -86,4 +114,4 @@ class InputText extends PureComponent {
   }
 }
 
-export default InputText;
+export default SearchBox;

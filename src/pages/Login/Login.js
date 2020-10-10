@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
+import { Redirect } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import InputText from '../../components/Input/InputText';
-import Cookies from 'js-cookie';
 import { auth } from '../../components/Auth/Auth';
-import { ACCESS_TOKEN } from '../../constants/Constants';
+import Toast from '../../components/Toast/Toast';
 
 class Login extends PureComponent {
   constructor(props) {
@@ -11,8 +11,10 @@ class Login extends PureComponent {
     this.state = {
       username: '',
       password: '',
-      error: false
+      error: false,
+      redirectToRefer: false
     };
+    this.from = { pathname: '/' };
   }
 
   onChange = (obj) => {
@@ -27,20 +29,26 @@ class Login extends PureComponent {
       username,
       password
     };
-    auth
-      .login(data)
-      .then((res) => {
-        const expiredDate = new Date(new Date().getTime() + res.expires_in * 1000);
-        Cookies.set(ACCESS_TOKEN, res[ACCESS_TOKEN], { expires: expiredDate });
-        window.location = '/';
-      })
-      .catch((err) => {
-        console.log('err: ', err);
-      });
+    auth.login(
+      data,
+      () => {
+        if (this.props.location.state) {
+          this.from = this.props.location.state.from;
+        }
+        window.location = '/#' + this.from.pathname;
+      },
+      (err) => {
+        Toast.error(err);
+      }
+    );
   };
 
   render() {
-    const { username, password } = this.state;
+    const { username, password, redirectToRefer } = this.state;
+
+    if (redirectToRefer) {
+      return <Redirect to={this.from} />;
+    }
 
     return (
       <div className="login-wrapper">

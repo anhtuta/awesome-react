@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { ROLES } from '../../constants/Constants';
+import { auth } from '../Auth/Auth';
 import './Nav.scss';
 
 // Tạm thời code mới chỉ handle được 2 level
@@ -50,30 +51,56 @@ const MENU_ITEMS = [
   }
 ];
 
+// Những URL nào ko có trong này tức là public, role nào cũng vào được
 const ROLE_TABLE = {
   '/book': [ROLES.ROLE_USER, ROLES.ROLE_ADMIN],
   '/fetch-demo': [ROLES.ROLE_USER, ROLES.ROLE_ADMIN]
 };
 
 class Nav extends Component {
+  handleLogout = () => {
+    auth.logout();
+  };
+
   render() {
     const { userInfo } = this.props;
+    console.log('render Nav: ', userInfo);
     const roleArray = userInfo ? userInfo.roleArray : [];
-    console.log(roleArray);
     const activeMenuItems = MENU_ITEMS.filter((item) => {
+      console.log('item: ', item);
       if (item.subItems) {
-        item.subItems = item.subItems.filter((subItem) =>
-          this.rolesHasPermission(roleArray, subItem.path)
-        );
+        console.log('item.subItems: ', item.subItems);
+        let temp = item.subItems.filter((subItem) => {
+          console.log(
+            'hehe: ',
+            subItem.path,
+            roleArray,
+            this.rolesHasPermission(roleArray, subItem.path)
+          );
+          return this.rolesHasPermission(roleArray, subItem.path);
+        });
+        console.log('temp: ', temp);
+        item.subItems = temp;
+        // return true;
       }
+
       return this.rolesHasPermission(roleArray, item.path);
     });
+    console.log('activeMenuItems: ', activeMenuItems);
     return (
       <nav className="navbar custom-navbar">
         <div className="nav-wrapper">{this.generateMenu(activeMenuItems)}</div>
         <div className="userinfo-wrapper">
           {!userInfo && <Link to="/login">Login</Link>}
-          {userInfo && <div>{userInfo.name}</div>}
+          {userInfo && (
+            <div>
+              {userInfo.name} (
+              <span className="logout-link" onClick={this.handleLogout}>
+                Logout
+              </span>
+              )
+            </div>
+          )}
         </div>
       </nav>
     );
@@ -81,6 +108,9 @@ class Nav extends Component {
 
   rolesHasPermission = (roles, pathname) => {
     if (!ROLE_TABLE[pathname]) return true;
+    if (pathname == '/fetch-demo') {
+      console.log('hehe: ', roles, ROLE_TABLE[pathname]);
+    }
     for (let i = 0; i < roles.length; i++) {
       if (ROLE_TABLE[pathname].includes(roles[i])) return true;
     }
