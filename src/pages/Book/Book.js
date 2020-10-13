@@ -69,18 +69,26 @@ class Book extends PureComponent {
       accessor: 'author'
     },
     {
+      Header: 'Category',
+      accessor: 'categoryName'
+    },
+    {
       Header: 'Price',
       accessor: 'price'
     },
     {
       Header: 'Created date',
-      accessor: 'created_date',
-      Cell: (props) => <Moment format="HH:mm DD/MM/YYYY">{props.value}</Moment>
+      accessor: 'createdDate',
+      Cell: ({ original }) => (
+        <Moment format="HH:mm DD/MM/YYYY">{original.createdDate}</Moment>
+      )
     },
     {
       Header: 'Modified date',
-      accessor: 'modified_date',
-      Cell: (props) => <Moment format="HH:mm DD/MM/YYYY">{props.value}</Moment>
+      accessor: 'modifiedDate',
+      Cell: ({ original }) => (
+        <Moment format="HH:mm DD/MM/YYYY">{original.modifiedDate}</Moment>
+      )
     }
   ];
 
@@ -93,11 +101,9 @@ class Book extends PureComponent {
     return (
       <div>
         <h2>All book</h2>
-        <SearchBox
-          name="searchText"
-          // onChange={this.onChange}
-          onSearch={this.onSearch}
-        />
+        <div className="width25">
+          <SearchBox name="searchText" onSearch={this.onSearch} />
+        </div>
         <Table
           columns={this.columns}
           data={bookData}
