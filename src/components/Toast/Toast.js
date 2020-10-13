@@ -24,7 +24,10 @@ const warn = (text) => {
 };
 
 const error = (text) => {
-  toast.error(text, options);
+  if (!text) {
+    text = 'Error: unexpected error occurred!';
+  }
+  toast.error(text.toString(), options);
 };
 
 const customToast = {

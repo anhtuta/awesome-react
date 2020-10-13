@@ -31,6 +31,9 @@ class Auth {
         successCallback();
       })
       .catch((err) => {
+        if (err.data) {
+          err = err.data;
+        }
         failCallback(err);
       });
   };

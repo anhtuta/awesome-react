@@ -33,12 +33,6 @@ class SearchBox extends PureComponent {
       value,
       errorMsg
     });
-
-    // this.props.onChange({
-    //   name: this.props.name,
-    //   value,
-    //   invalid: !!errorMsg
-    // });
   };
 
   onKeyUp = (e, searchText) => {
