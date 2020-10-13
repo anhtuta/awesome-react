@@ -36,10 +36,13 @@ class Login extends PureComponent {
         if (this.props.location.state) {
           this.from = this.props.location.state.from;
         }
-        window.location = '/#' + this.from.pathname;
+        window.location.hash = this.from.pathname;
+
+        // reload to rerender Nav (some menu could be displayed only after login)
+        window.location.reload();
       },
       (err) => {
-        Toast.error(err);
+        Toast.error(err.error_description ? err.error_description : err);
       }
     );
   };

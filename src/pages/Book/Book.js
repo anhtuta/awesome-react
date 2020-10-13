@@ -17,8 +17,16 @@ class Book extends PureComponent {
   }
 
   getBooks = (params) => {
+    console.log(this.state);
     this.setState({ loading: true });
-    const newParams = { ...this.state.params, ...params };
+    const sort = params.sortBy
+      ? params.sortBy + ',' + params.sortOrder
+      : this.state.params.sort;
+    const newParams = {
+      ...this.state.params,
+      ...params,
+      sort
+    };
     this.setState({
       params: newParams
     });
@@ -70,7 +78,8 @@ class Book extends PureComponent {
     },
     {
       Header: 'Category',
-      accessor: 'categoryName'
+      accessor: 'categoryName',
+      sortable: false
     },
     {
       Header: 'Price',
