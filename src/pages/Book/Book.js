@@ -17,7 +17,6 @@ class Book extends PureComponent {
   }
 
   getBooks = (params) => {
-    console.log(this.state);
     this.setState({ loading: true });
     const sort = params.sortBy
       ? params.sortBy + ',' + params.sortOrder

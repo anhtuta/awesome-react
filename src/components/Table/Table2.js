@@ -30,7 +30,7 @@ const Table = (props) => {
 
   const dynamicProps = {
     className: `-striped -highlight ${className ? className : ''}`,
-    showPagination: pages && pages > 0,
+    showPagination: pages > 0,
     onFetchData,
     columns,
     data,
