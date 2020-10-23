@@ -45,14 +45,15 @@ axiosClient.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.log(error);
     if (error.response && error.response.status) {
       if (error.response.status === 401) {
         auth.clearSession();
       }
       //... handle other statuses
+      return Promise.reject(error.response);
+    } else {
+      return Promise.reject(error);
     }
-    return Promise.reject(error);
   }
 );
 

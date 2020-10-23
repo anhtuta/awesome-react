@@ -1,80 +1,89 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { ROLES } from '../../constants/Constants';
+import { MENU_ITEMS, ROLE_TABLE } from '../../constants/Constants';
 import { auth } from '../Auth/Auth';
 import './Nav.scss';
-
-// Tạm thời code mới chỉ handle được 2 level
-const MENU_ITEMS = [
-  {
-    name: 'Home',
-    path: '/',
-    key: 'home',
-    level: 1,
-    subItems: null
-  },
-  {
-    name: 'Book',
-    path: '/book',
-    key: 'book',
-    level: 1,
-    subItems: null
-  },
-  {
-    name: 'About',
-    path: '/about',
-    key: 'about',
-    level: 1,
-    subItems: null
-  },
-  {
-    name: 'Demo',
-    path: null,
-    key: 'demo',
-    level: 1,
-    subItems: [
-      {
-        name: 'Clock Demo',
-        path: '/clock-demo',
-        key: 'clockDemo',
-        level: 2,
-        subItems: null
-      },
-      {
-        name: 'Fetch Demo',
-        path: '/fetch-demo',
-        key: 'fetchDemo',
-        level: 2,
-        subItems: null
-      }
-    ]
-  }
-];
-
-const ROLE_TABLE = {
-  '/book': [ROLES.ROLE_USER, ROLES.ROLE_ADMIN],
-  '/fetch-demo': [ROLES.ROLE_USER, ROLES.ROLE_ADMIN]
-};
 
 class Nav extends Component {
   handleLogout = () => {
     auth.logout();
   };
 
+  // Duyệt từng phần tử của menuItems, xem roleArray có quyền thằng item nào,
+  // nếu ko có quyền xem thằng item đó thì remove nó khỏi mảng menuItems
+  // Vẫn ko fix được cái lỗi thỉnh thoảng bị miss menu /fetch-demo
+  // (ko hiểu tại sao luôn, có thể là do thằng Javascript nó sida)
+  // => Solution: hãy để việc gen menu phía BE care
+  getActiveMenuItems = (roleArray, menuItems) => {
+    menuItems.forEach((item, index) => {
+      if (item.subItems) {
+        this.getActiveMenuItems(roleArray, item.subItems);
+      } else {
+        if (!this.rolesHasPermission(roleArray, item.path)) {
+          menuItems.splice(index, 1);
+        }
+      }
+    });
+  };
+
+  // Những URL nào ko có trong này tức là public, role nào cũng vào được
+  rolesHasPermission = (roles, path) => {
+    if (!ROLE_TABLE[path]) return true;
+    for (let i = 0; i < roles.length; i++) {
+      if (ROLE_TABLE[path].includes(roles[i])) return true;
+    }
+    // Dùng forEach: bất đồng bộ nên ko được nhé!
+    // Nó sẽ return false trước khi chạy vào trong forEach
+    // roles.forEach(role => {
+    //   if (ROLE_TABLE[path].includes(role)) return true;
+    // });
+    return false;
+  };
+
+  generateMenu = (menuItems) => {
+    const { pathname } = this.props.location;
+    return menuItems.map((item) => {
+      const itemClass = 'menu-item' + (item.path === pathname ? ' active-menu' : '');
+      if (item.path === null) item.path = '#';
+
+      if (item.subItems) {
+        return (
+          <li key={item.key} className={itemClass + ' menu-parent level' + item.level}>
+            <Link to={item.path}>
+              {item.name}{' '}
+              <i
+                className={
+                  'caret fas ' + (item.level > 1 ? 'fa-caret-right' : 'fa-caret-down')
+                }
+              ></i>
+            </Link>
+            <ul
+              key={item.key}
+              className={itemClass + ' sub-menu level' + (item.level + 1)}
+            >
+              {this.generateMenu(item.subItems)}
+            </ul>
+          </li>
+        );
+      } else {
+        return (
+          <li key={item.key} className={itemClass + ' level' + item.level}>
+            <Link to={item.path}>{item.name}</Link>
+          </li>
+        );
+      }
+    });
+  };
+
   render() {
     const { userInfo } = this.props;
     const roleArray = userInfo ? userInfo.roleArray : [];
-    const activeMenuItems = MENU_ITEMS.filter((item) => {
-      if (item.subItems) {
-        item.subItems = item.subItems.filter((subItem) =>
-          this.rolesHasPermission(roleArray, subItem.path)
-        );
-      }
-      return this.rolesHasPermission(roleArray, item.path);
-    });
+    const menuItems = [...MENU_ITEMS];
+    this.getActiveMenuItems(roleArray, menuItems);
+
     return (
       <nav className="navbar custom-navbar">
-        <div className="nav-wrapper">{this.generateMenu(activeMenuItems)}</div>
+        <ul className="nav-wrapper">{this.generateMenu(menuItems)}</ul>
         <div className="userinfo-wrapper">
           {!userInfo && <Link to="/login">Login</Link>}
           {userInfo && (
@@ -90,42 +99,6 @@ class Nav extends Component {
       </nav>
     );
   }
-
-  // Những URL nào ko có trong này tức là public, role nào cũng vào được
-  rolesHasPermission = (roles, pathname) => {
-    if (!ROLE_TABLE[pathname]) return true;
-    for (let i = 0; i < roles.length; i++) {
-      if (ROLE_TABLE[pathname].includes(roles[i])) return true;
-    }
-    // Dùng forEach: bất đồng bộ nên ko được nhé!
-    // Nó sẽ return false trước khi chạy vào trong forEach
-    // roles.forEach(role => {
-    //   if (ROLE_TABLE[pathname].includes(role)) return true;
-    // });
-    return false;
-  };
-
-  generateMenu = (menuItems) => {
-    const { pathname } = this.props.location;
-    return menuItems.map((item) => {
-      const itemClass = 'menu-item' + (item.path === pathname ? ' active-menu' : '');
-
-      if (item.subItems) {
-        return (
-          <div key={item.key} className={itemClass + ' menu-parent'}>
-            {item.name} <i className="fas fa-caret-down"></i>
-            <div className="menu-children">{this.generateMenu(item.subItems)}</div>
-          </div>
-        );
-      } else {
-        return (
-          <div key={item.key} className={itemClass}>
-            <Link to={item.path}>{item.name}</Link>
-          </div>
-        );
-      }
-    });
-  };
 }
 
 // Use withRouter HOC in order to inject match, history and location in your component props.
