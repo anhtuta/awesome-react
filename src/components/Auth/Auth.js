@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie';
 import { ACCESS_TOKEN } from '../../constants/Constants';
 import axiosClient from '../../service/axiosClient';
+import Toast from '../Toast/Toast';
 
 class Auth {
   constructor() {
@@ -45,6 +46,12 @@ class Auth {
 
   getMe = () => {
     return axiosClient.get('/api/user/me');
+  };
+
+  redirectToLoginPage = () => {
+    Toast.info('You need to login first!');
+    Cookies.remove(ACCESS_TOKEN);
+    window.location.hash = '/login';
   };
 }
 
