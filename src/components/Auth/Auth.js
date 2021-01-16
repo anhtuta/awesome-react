@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie';
 import { ACCESS_TOKEN } from '../../constants/Constants';
 import axiosClient from '../../service/axiosClient';
+import Toast from '../Toast/Toast';
 
 class Auth {
   constructor() {
@@ -31,20 +32,31 @@ class Auth {
         successCallback();
       })
       .catch((err) => {
-        if (err.data) {
-          err = err.data;
-        }
-        failCallback(err);
+        failCallback(err.data ? err.data : err);
       });
   };
 
   logout = () => {
-    Cookies.remove(ACCESS_TOKEN);
-    window.location = '/';
+    axiosClient
+      .post('/signout')
+      .then((res) => {
+        Cookies.remove(ACCESS_TOKEN);
+        window.location = '/';
+      })
+      .catch((err) => {
+        console.log(err);
+        Toast.error(err.data && err.data.message ? err.data.message : err);
+      });
   };
 
   getMe = () => {
     return axiosClient.get('/api/user/me');
+  };
+
+  redirectToLoginPage = () => {
+    Toast.info('You need to login first!');
+    Cookies.remove(ACCESS_TOKEN);
+    window.location.hash = '/login';
   };
 }
 

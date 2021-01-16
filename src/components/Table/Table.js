@@ -55,4 +55,21 @@ Table.propTypes = {
   onFetchData: PropTypes.func
 };
 
+/*
+Note: props.data must contains "list" and "totalPages", for example:
+props.data = {
+  "list" : [
+    {
+    "id" : 1,
+    "title" : "Những tháng năm rực rỡ",
+    "author" : "Ae-ran Kim"
+   },
+   {
+    "id" : 2,
+    "title" : "21 bài học cho thế kỉ 21",
+    "author" : "Yuval Noah Harari"
+  }],
+  "totalPages" : 2
+}
+*/
 export default Table;

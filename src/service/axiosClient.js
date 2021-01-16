@@ -47,7 +47,7 @@ axiosClient.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status) {
       if (error.response.status === 401) {
-        auth.clearSession();
+        auth.redirectToLoginPage();
       }
       //... handle other statuses
       return Promise.reject(error.response);
