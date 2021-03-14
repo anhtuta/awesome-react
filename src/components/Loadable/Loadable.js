@@ -42,6 +42,12 @@ export const Book = Loadable({
   delay: 250
 });
 
+export const Staff = Loadable({
+  loader: () => import('../../pages/Staff/Staff'),
+  loading: Loading,
+  delay: 250
+});
+
 export const Home = Loadable({
   loader: () => import('../../pages/Home/Home'),
   loading: Loading,

@@ -44,6 +44,7 @@ class App extends Component {
               <Route exact path="/about" component={Loadable.About} />
               <RestrictedRoute exact path="/login" component={Loadable.Login} />
               <PrivateRoute exact path="/book" component={Loadable.Book} />
+              <PrivateRoute exact path="/staff" component={Loadable.Staff} />
               <PrivateRoute exact path="/fetch-demo" component={Loadable.FetchDemo} />
               <Route path="" component={Loadable.NotFound} />
             </Switch>
