@@ -60,6 +60,6 @@ export const MENU_ITEMS = [
 ];
 
 export const ROLE_TABLE = {
-  '/book': [ROLES.ROLE_USER, ROLES.ROLE_ADMIN],
-  '/fetch-demo': [ROLES.ROLE_USER, ROLES.ROLE_ADMIN]
+  '/book': [ROLES.ROLE_USER],
+  '/fetch-demo': [ROLES.ROLE_USER]
 };

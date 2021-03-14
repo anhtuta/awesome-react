@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie';
 import { ACCESS_TOKEN } from '../../constants/Constants';
 import axiosClient from '../../service/axiosClient';
 import Toast from '../Toast/Toast';
@@ -9,9 +8,8 @@ class Auth {
   }
 
   isAuthenticated = () => {
-    const access_token = Cookies.get(ACCESS_TOKEN);
+    const access_token = localStorage.getItem(ACCESS_TOKEN);
     return !!access_token;
-    // return true;
   };
 
   login = ({ username, password }, successCallback, failCallback) => {
@@ -28,7 +26,7 @@ class Auth {
       })
       .then((res) => {
         const expiredDate = new Date(new Date().getTime() + res.expires_in * 1000);
-        Cookies.set(ACCESS_TOKEN, res[ACCESS_TOKEN], { expires: expiredDate });
+        localStorage.setItem(ACCESS_TOKEN, res[ACCESS_TOKEN]);
         successCallback();
       })
       .catch((err) => {
@@ -40,7 +38,7 @@ class Auth {
     axiosClient
       .post('/signout')
       .then((res) => {
-        Cookies.remove(ACCESS_TOKEN);
+        localStorage.removeItem(ACCESS_TOKEN);
         window.location = '/';
       })
       .catch((err) => {
@@ -55,7 +53,7 @@ class Auth {
 
   redirectToLoginPage = () => {
     Toast.info('You need to login first!');
-    Cookies.remove(ACCESS_TOKEN);
+    localStorage.removeItem(ACCESS_TOKEN);
     window.location.hash = '/login';
   };
 }
