@@ -1,6 +1,5 @@
 import axios from 'axios';
 import queryString from 'query-string';
-import Cookies from 'js-cookie';
 import { ACCESS_TOKEN } from '../constants/Constants';
 import { auth } from '../components/Auth/Auth';
 
@@ -27,8 +26,8 @@ axiosClient.interceptors.request.use(
   async (config) => {
     config.data = queryString.stringify(config.data);
     if (!config.headers.Authorization) {
-      config.headers.Authorization = Cookies.get(ACCESS_TOKEN)
-        ? `Bearer ${Cookies.get(ACCESS_TOKEN)}`
+      config.headers.Authorization = localStorage.getItem(ACCESS_TOKEN)
+        ? `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`
         : '';
     }
     return config;
