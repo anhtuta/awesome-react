@@ -1,5 +1,8 @@
 export const ACCESS_TOKEN = 'access_token';
 
+export const ACTION_ADD = 'ADD';
+export const ACTION_EDIT = 'EDIT';
+
 export const ROLES = {
   ROLE_USER: 'USER',
   ROLE_ADMIN: 'ADMIN',
