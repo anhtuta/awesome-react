@@ -81,7 +81,7 @@ class Nav extends Component {
     this.getActiveMenuItems(roleArray, menuItems);
 
     return (
-      <nav className="navbar custom-navbar">
+      <nav className="custom-navbar">
         <ul className="nav-wrapper">{this.generateMenu(menuItems)}</ul>
         <div className="userinfo-wrapper">
           {!userInfo && <Link to="/login">Login</Link>}

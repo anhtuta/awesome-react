@@ -25,7 +25,6 @@ class Auth {
         }
       })
       .then((res) => {
-        const expiredDate = new Date(new Date().getTime() + res.expires_in * 1000);
         localStorage.setItem(ACCESS_TOKEN, res[ACCESS_TOKEN]);
         successCallback();
       })

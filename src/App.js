@@ -5,6 +5,7 @@ import { auth } from './components/Auth/Auth';
 import PrivateRoute from './components/Auth/PrivateRoute';
 import RestrictedRoute from './components/Auth/RestrictedRoute';
 import * as Loadable from './components/Loadable/Loadable';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './scss/App.scss';
 
 class App extends Component {
@@ -37,7 +38,7 @@ class App extends Component {
       <HashRouter>
         <div className="app">
           <Loadable.Nav userInfo={userInfo} />
-          <div className="container">
+          <div className="app-content">
             <Switch>
               <Route exact path="/" component={Loadable.Home} />
               <Route exact path="/clock-demo" component={Loadable.ClockDemo} />

@@ -2,6 +2,7 @@
   margin: 0 20px;
   * {
     box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   .width25 {
     width: 25%;
@@ -14,5 +15,16 @@
   .width75 {
     width: 75%;
     display: inline-block;
+  }
+
+  /* Icon button */
+  .icon-btn-action {
+    cursor: pointer;
+  }
+  .icon-btn-edit {
+    color: #2199f9;
+  }
+  .icon-btn-delete {
+    color: red;
   }
 }

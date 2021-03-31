@@ -3,14 +3,14 @@ import queryString from 'query-string';
 import { ACCESS_TOKEN } from '../constants/Constants';
 import { auth } from '../components/Auth/Auth';
 
-const cleanParam = (obj) => {
-  Object.keys(obj).forEach((k) => {
-    if (obj[k] === null || obj[k] === undefined) {
-      delete obj[k];
-    }
-  });
-  return obj;
-};
+// const cleanParam = (obj) => {
+//   Object.keys(obj).forEach((k) => {
+//     if (obj[k] === null || obj[k] === undefined) {
+//       delete obj[k];
+//     }
+//   });
+//   return obj;
+// };
 
 const axiosClient = axios.create({
   baseURL: process.env.REACT_APP_HOST_API,
