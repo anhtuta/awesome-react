@@ -9,18 +9,15 @@ class Nav extends Component {
     auth.logout();
   };
 
-  // Duyệt từng phần tử của menuItems, xem roleArray có quyền thằng item nào,
-  // nếu ko có quyền xem thằng item đó thì remove nó khỏi mảng menuItems
-  // Vẫn ko fix được cái lỗi thỉnh thoảng bị miss menu /fetch-demo
-  // (ko hiểu tại sao luôn, có thể là do thằng Javascript nó sida)
-  // => Solution: hãy để việc gen menu phía BE care
   getActiveMenuItems = (roleArray, menuItems) => {
     menuItems.forEach((item, index) => {
       if (item.subItems) {
         this.getActiveMenuItems(roleArray, item.subItems);
       } else {
         if (!this.rolesHasPermission(roleArray, item.path)) {
-          menuItems.splice(index, 1);
+          // ĐỪNG dùng splice, bởi vì JS bất đồng bộ nên sẽ bị lỗi thỉnh thoảng bị miss menu item
+          // menuItems.splice(index, 1);
+          item.enabled = false;
         }
       }
     });
@@ -67,9 +64,11 @@ class Nav extends Component {
         );
       } else {
         return (
-          <li key={item.key} className={itemClass + ' level' + item.level}>
-            <Link to={item.path}>{item.name}</Link>
-          </li>
+          item.enabled && (
+            <li key={item.key} className={itemClass + ' level' + item.level}>
+              <Link to={item.path}>{item.name}</Link>
+            </li>
+          )
         );
       }
     });

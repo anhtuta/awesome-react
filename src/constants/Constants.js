@@ -2,7 +2,9 @@ export const ACCESS_TOKEN = 'access_token';
 
 export const ROLES = {
   ROLE_USER: 'USER',
-  ROLE_ADMIN: 'ADMIN'
+  ROLE_ADMIN: 'ADMIN',
+  ROLE_STORE_MANAGER: 'STORE_MANAGER',
+  ROLE_BOOK_MANAGER: 'ROLE_BOOK_MANAGER'
 };
 
 export const MENU_ITEMS = [
@@ -11,6 +13,7 @@ export const MENU_ITEMS = [
     path: '/',
     key: 'home',
     level: 1,
+    enabled: true,
     subItems: null
   },
   {
@@ -18,6 +21,15 @@ export const MENU_ITEMS = [
     path: '/book',
     key: 'book',
     level: 1,
+    enabled: true,
+    subItems: null
+  },
+  {
+    name: 'Staff',
+    path: '/staff',
+    key: 'staff',
+    level: 1,
+    enabled: true,
     subItems: null
   },
   {
@@ -25,6 +37,7 @@ export const MENU_ITEMS = [
     path: '/about',
     key: 'about',
     level: 1,
+    enabled: true,
     subItems: null
   },
   {
@@ -32,18 +45,21 @@ export const MENU_ITEMS = [
     path: null,
     key: 'demo',
     level: 1,
+    enabled: true,
     subItems: [
       {
         name: 'Hook demo',
         path: null,
         key: 'hookDemo',
         level: 2,
+        enabled: true,
         subItems: [
           {
             name: 'Clock Demo',
             path: '/clock-demo',
             key: 'clockDemo',
             level: 3,
+            enabled: true,
             subItems: null
           },
           {
@@ -51,6 +67,7 @@ export const MENU_ITEMS = [
             path: '/fetch-demo',
             key: 'fetchDemo',
             level: 3,
+            enabled: true,
             subItems: null
           }
         ]
@@ -61,5 +78,6 @@ export const MENU_ITEMS = [
 
 export const ROLE_TABLE = {
   '/book': [ROLES.ROLE_USER],
+  '/staff': [ROLES.ROLE_STORE_MANAGER],
   '/fetch-demo': [ROLES.ROLE_USER]
 };
