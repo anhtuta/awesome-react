@@ -1,0 +1,49 @@
+# This code is licensed from CircleCI to the user under the MIT license.
+# See here for details: https://circleci.com/developer/orbs/licensing
+version: 2.1
+jobs:
+  build-and-publish:
+    docker:
+      - image: circleci/node:latest
+    working_directory: ~/awe
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - awe-dependencies-{{ checksum "package.json" }}
+            - awe-dependencies- # fallback to using the latest cache if no exact match is found
+      # - run:
+      #     name: Prepare for testing
+      #     command: |
+      #       npm install --save-dev @testing-library/react
+      # - run:
+      #     name: Run unit-tests
+      #     command: |
+      #       npm run test a
+      - run:
+          name: Install dependencies
+          command: | 
+            cd ~/awe
+            yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: awe-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Build
+          command: yarn build
+      - run:
+          name: Compress Artifacts
+          command: tar -cvzf awe.tar.gz build  # Nếu chỉ dùng -cvf thì nó chỉ đóng gói chứ ko nén. Dùng thêm -z sẽ nén (gzip), kích thước file giảm xuống đáng kể! Dùng .tgz hay .tar.gz đều được
+      - store_artifacts:
+          path: awe.tar.gz
+
+workflows:
+  version: 2.1
+  awesome-react-workflow:
+    jobs:
+      - build-and-publish
+          filters:  # using regex filters requires the entire branch to match
+            branches:
+              only:  # only branches matching the below regex filters will run
+                - master
