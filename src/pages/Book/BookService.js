@@ -4,8 +4,13 @@ const getBooks = (params) => {
   return axiosClient.get('/api/book', { params });
 };
 
+const createBook = (data) => {
+  return axiosClient.post('/api/book', data, {});
+};
+
 const BookService = {
-  getBooks
+  getBooks,
+  createBook
 };
 
 export default BookService;

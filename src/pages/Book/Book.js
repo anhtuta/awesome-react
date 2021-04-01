@@ -4,9 +4,10 @@ import Table from '../../components/Table/Table';
 import SearchBox from '../../components/Input/SearchBox';
 import Button from '../../components/Button/Button';
 import { ACTION_ADD, ACTION_EDIT } from '../../constants/Constants';
+import BookUpsertModal from './BookUpsertModal';
 import BookService from './BookService';
+import CategoryService from '../Category/CategoryService';
 import './Book.scss';
-import NormalModal from '../../components/Modal/NormalModal';
 
 class Book extends PureComponent {
   constructor(props) {
@@ -19,8 +20,28 @@ class Book extends PureComponent {
       loading: false,
       action: '',
       showUpsertModal: false,
-      showConfirmModal: false
+      showConfirmModal: false,
+      categoryOptions: []
     };
+  }
+
+  componentDidMount() {
+    // get all category for creating new or updating book
+    CategoryService.getAllCategories()
+      .then((res) => {
+        console.log(res);
+        const categoryOptions = res.data.map((item) => ({
+          value: item.id,
+          label: item.name
+        }));
+        this.setState({ categoryOptions });
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({
+          loading: false
+        });
+      });
   }
 
   getBooks = (params) => {
@@ -150,7 +171,14 @@ class Book extends PureComponent {
   };
 
   render() {
-    const { bookData, loading, showUpsertModal, showConfirmModal } = this.state;
+    const {
+      bookData,
+      loading,
+      showUpsertModal,
+      showConfirmModal,
+      categoryOptions,
+      action
+    } = this.state;
     console.log(this.state);
 
     return (
@@ -177,11 +205,14 @@ class Book extends PureComponent {
           defaultPageSize={10}
         />
 
-        <NormalModal
-          show={showUpsertModal}
-          modalTitle="Add new book"
-          onClose={this.onCloseUpsertModal}
-        />
+        {showUpsertModal && (
+          <BookUpsertModal
+            showUpsertModal={showUpsertModal}
+            onCloseUpsertModal={this.onCloseUpsertModal}
+            categoryOptions={categoryOptions}
+            action={action}
+          />
+        )}
       </div>
     );
   }
