@@ -15,17 +15,11 @@ class Auth {
   login = ({ username, password }, successCallback, failCallback) => {
     const data = {
       username,
-      password,
-      grant_type: 'password'
+      password
     };
     axiosClient
-      .post('/oauth/token', data, {
-        headers: {
-          Authorization: 'Basic Y2xpZW50SWQ6c2VjcmV0QHR1emFrdQ'
-        }
-      })
+      .post('/signin', data)
       .then((res) => {
-        const expiredDate = new Date(new Date().getTime() + res.expires_in * 1000);
         localStorage.setItem(ACCESS_TOKEN, res[ACCESS_TOKEN]);
         successCallback();
       })

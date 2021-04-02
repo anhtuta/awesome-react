@@ -74,10 +74,12 @@ class SearchBox extends PureComponent {
 
     return (
       <div className="input-wrapper">
-        <label className="input-label">
-          {label}
-          {isRequire && <span className="input-require">&nbsp;*</span>}
-        </label>
+        {label && (
+          <label className="input-label">
+            {label}
+            {isRequire && <span className="input-require">&nbsp;*</span>}
+          </label>
+        )}
         <div className="input-search-wrapper">
           <i className="fas fa-search input-icon-search" onClick={this.onSearch}></i>
           <input

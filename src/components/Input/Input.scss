@@ -1,6 +1,6 @@
 .input-wrapper {
   text-align: left;
-  margin-bottom: 10px;
+  margin: 10px 0;
   .input-label {
     display: inline-block;
     margin-bottom: 5px;
@@ -21,6 +21,7 @@
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    line-height: initial; /* override this prop of bootstrap */
   }
   .input-text:focus {
     color: #495057;
