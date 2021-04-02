@@ -42,7 +42,7 @@ class Login extends PureComponent {
         window.location.reload();
       },
       (err) => {
-        Toast.error(err.error_description ? err.error_description : err);
+        Toast.error(err);
       }
     );
   };
