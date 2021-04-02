@@ -3,34 +3,35 @@ import queryString from 'query-string';
 import { ACCESS_TOKEN } from '../constants/Constants';
 import { auth } from '../components/Auth/Auth';
 
-// const cleanParam = (obj) => {
-//   Object.keys(obj).forEach((k) => {
-//     if (obj[k] === null || obj[k] === undefined) {
-//       delete obj[k];
-//     }
-//   });
-//   return obj;
-// };
-
-const axiosClient = axios.create({
-  baseURL: process.env.REACT_APP_HOST_API,
-  headers: {
-    'content-type': 'application/x-www-form-urlencoded',
-    Pragma: 'no-cache'
-  },
-  // paramsSerializer: (params) => queryString.stringify(cleanParam(params)),
-  withCredentials: true
-});
-
-axiosClient.interceptors.request.use(
-  async (config) => {
-    config.data = queryString.stringify(config.data);
-    if (!config.headers.Authorization) {
-      config.headers.Authorization = localStorage.getItem(ACCESS_TOKEN)
-        ? `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`
-        : '';
+const cleanParam = (obj) => {
+  Object.keys(obj).forEach((k) => {
+    if (obj[k] === null || obj[k] === undefined) {
+      delete obj[k];
     }
-    return config;
+  });
+  return obj;
+};
+
+axios.interceptors.request.use(
+  function (config) {
+    const newConfig = {
+      ...config,
+      paramsSerializer: (params) =>
+        queryString.stringify(cleanParam(params), { arrayFormat: 'repeat' }),
+      baseURL: process.env.REACT_APP_HOST_API,
+      withCredentials: true,
+      headers: {
+        ...config.headers,
+        Pragma: 'no-cache'
+      }
+    };
+
+    // Add auth token
+    if (localStorage.getItem(ACCESS_TOKEN)) {
+      newConfig.headers.Authorization = `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`;
+    }
+
+    return newConfig;
   },
   (error) => {
     console.log(error);
@@ -38,7 +39,7 @@ axiosClient.interceptors.request.use(
   }
 );
 
-axiosClient.interceptors.response.use(
+axios.interceptors.response.use(
   (response) => {
     if (response && response.data) return response.data;
     return response;
@@ -56,4 +57,4 @@ axiosClient.interceptors.response.use(
   }
 );
 
-export default axiosClient;
+export default axios;
