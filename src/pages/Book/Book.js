@@ -5,9 +5,11 @@ import SearchBox from '../../components/Input/SearchBox';
 import Button from '../../components/Button/Button';
 import { ACTION_ADD, ACTION_EDIT } from '../../constants/Constants';
 import BookUpsertModal from './BookUpsertModal';
+import Toast from '../../components/Toast/Toast';
 import BookService from './BookService';
 import CategoryService from '../Category/CategoryService';
 import './Book.scss';
+import ConfirmModal from '../../components/Modal/ConfirmModal';
 
 class Book extends PureComponent {
   constructor(props) {
@@ -21,7 +23,8 @@ class Book extends PureComponent {
       action: '',
       showUpsertModal: false,
       showConfirmModal: false,
-      categoryOptions: []
+      categoryOptions: [],
+      selectedRow: {}
     };
   }
 
@@ -29,7 +32,6 @@ class Book extends PureComponent {
     // get all category for creating new or updating book
     CategoryService.getAllCategories()
       .then((res) => {
-        console.log(res);
         const categoryOptions = res.data.map((item) => ({
           value: item.id,
           label: item.name
@@ -133,10 +135,13 @@ class Book extends PureComponent {
         <div>
           <i
             className="fas fa-edit icon-btn-action icon-btn-edit"
-            onClick={() => this.onDelete(original.id)}
+            onClick={() => this.onUpdate(original)}
           ></i>
           &nbsp;
-          <i className="fas fa-trash-alt icon-btn-action icon-btn-delete"></i>
+          <i
+            className="fas fa-trash-alt icon-btn-action icon-btn-delete"
+            onClick={() => this.onDelete(original)}
+          ></i>
         </div>
       ),
       width: 80
@@ -154,20 +159,65 @@ class Book extends PureComponent {
     });
   };
 
-  onUpdate = () => {
-    this.setState({
-      action: ACTION_EDIT
+  getCategoryOptionById = (id) => {
+    return this.state.categoryOptions.find((option) => {
+      return option.value === id;
     });
   };
 
-  onDelete = (id) => {
-    alert('Delete id = ' + id);
+  onUpdate = (original) => {
+    console.log('original: ', original);
+    const selectedRow = {
+      id: original.id,
+      title: original.title,
+      author: original.author,
+      category: this.getCategoryOptionById(original.category.id),
+      price: original.price
+    };
+    this.setState({
+      action: ACTION_EDIT,
+      showUpsertModal: true,
+      selectedRow
+    });
+  };
+
+  onDelete = (original) => {
+    this.setState({
+      showConfirmModal: true,
+      selectedRow: { id: original.id, title: original.title }
+    });
   };
 
   onCloseUpsertModal = () => {
     this.setState({
-      showUpsertModal: false
+      showUpsertModal: false,
+      selectedRow: {}
     });
+  };
+
+  onCloseConfirmModal = () => {
+    this.setState({
+      showConfirmModal: false,
+      selectedRow: {}
+    });
+  };
+
+  onSave = () => {
+    this.onCloseUpsertModal();
+    this.getBooks(this.state.params);
+  };
+
+  onDeleteBook = () => {
+    BookService.deleteBook(this.state.selectedRow.id)
+      .then((res) => {
+        Toast.success(res.message);
+        this.onCloseConfirmModal();
+        this.getBooks(this.state.params);
+      })
+      .catch((err) => {
+        console.log(err);
+        Toast.error(err);
+      });
   };
 
   render() {
@@ -177,9 +227,9 @@ class Book extends PureComponent {
       showUpsertModal,
       showConfirmModal,
       categoryOptions,
-      action
+      action,
+      selectedRow
     } = this.state;
-    console.log(this.state);
 
     return (
       <div className="book-wrapper">
@@ -210,7 +260,21 @@ class Book extends PureComponent {
             showUpsertModal={showUpsertModal}
             onCloseUpsertModal={this.onCloseUpsertModal}
             categoryOptions={categoryOptions}
+            selectedRow={selectedRow}
             action={action}
+            onSave={this.onSave}
+          />
+        )}
+        {showConfirmModal && (
+          <ConfirmModal
+            show={showConfirmModal}
+            modalTitle={`Delete this book "${selectedRow.title}", this cannot be undone?`}
+            saveButtonText="Delete"
+            cancelButtonText="Cancel"
+            isDelete={true}
+            onSave={this.onDeleteBook}
+            onClose={this.onCloseConfirmModal}
+            onCancel={this.onCloseConfirmModal}
           />
         )}
       </div>

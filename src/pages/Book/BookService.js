@@ -5,12 +5,22 @@ const getBooks = (params) => {
 };
 
 const createBook = (data) => {
-  return axiosClient.post('/api/book', data, {});
+  return axiosClient.post('/api/book', data);
+};
+
+const updateBook = (data) => {
+  return axiosClient.put('/api/book/' + data.id, data);
+};
+
+const deleteBook = (id) => {
+  return axiosClient.delete('/api/book/' + id);
 };
 
 const BookService = {
   getBooks,
-  createBook
+  createBook,
+  updateBook,
+  deleteBook
 };
 
 export default BookService;
