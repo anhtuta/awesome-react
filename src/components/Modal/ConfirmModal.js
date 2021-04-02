@@ -6,6 +6,7 @@ const ConfirmModal = (props) => {
   const {
     show,
     customClass = '',
+    saveButtonClass = '',
     modalTitle = '',
     bodyMessage = '',
     cancelButtonText = '',
@@ -28,19 +29,27 @@ const ConfirmModal = (props) => {
       <Modal.Header closeButton>
         <Modal.Title>{modalTitle}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        {bodyMessage}
-        {children}
-      </Modal.Body>
+      {(bodyMessage || children) && (
+        <Modal.Body>
+          {bodyMessage}
+          {children}
+        </Modal.Body>
+      )}
       <Modal.Footer>
-        {cancelButtonText && (
-          <Button type="clear-button" onClick={onCancel} text={cancelButtonText} />
-        )}
         {saveButtonText && (
           <Button
             type={isDelete ? 'delete-button' : 'solid-button'}
+            className={isDelete ? 'btn-danger' : 'btn-success'}
             onClick={onSave}
             text={saveButtonText}
+          />
+        )}
+        {cancelButtonText && (
+          <Button
+            type="clear-button"
+            onClick={onCancel}
+            text={cancelButtonText}
+            className="btn-secondary"
           />
         )}
       </Modal.Footer>

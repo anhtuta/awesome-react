@@ -75,7 +75,7 @@ class InputText extends PureComponent {
             value={value}
             disabled={disabled}
             onChange={this.onChange}
-            className={'input-text' + (!!errorMsg ? 'input-error' : '')}
+            className={'input-text' + (!!errorMsg ? ' input-error' : '')}
             placeholder={placeholder}
             onKeyPress={this.onKeyPress}
           />

@@ -1,7 +1,6 @@
 import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from '../Button/Button';
-// import "../../css/Modal.css";
 
 const NormalModal = (props) => {
   const {
@@ -33,8 +32,22 @@ const NormalModal = (props) => {
       </Modal.Header>
       <Modal.Body>{children}</Modal.Body>
       <Modal.Footer>
+        {saveButtonText && (
+          <Button
+            type={isDelete ? 'delete-button' : 'solid-button'}
+            className={isDelete ? 'btn-danger' : 'btn-success'}
+            onClick={onSave}
+            text={saveButtonText}
+            disabled={disabledSaveBtn}
+          />
+        )}
         {cancelButtonText && (
-          <Button type="clear-button" onClick={onCancel} text={cancelButtonText} />
+          <Button
+            type="clear-button"
+            className="btn-secondary"
+            onClick={onCancel}
+            text={cancelButtonText}
+          />
         )}
         {buttons &&
           buttons.map((button) => {
@@ -48,14 +61,6 @@ const NormalModal = (props) => {
               />
             );
           })}
-        {saveButtonText && (
-          <Button
-            type={isDelete ? 'delete-button' : 'solid-button'}
-            onClick={onSave}
-            text={saveButtonText}
-            disabled={disabledSaveBtn}
-          />
-        )}
       </Modal.Footer>
     </Modal>
   );
