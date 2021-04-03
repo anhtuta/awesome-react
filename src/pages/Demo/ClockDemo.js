@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Clock from './Clock';
 
-const HookDemo = () => {
+// Demo hook in ReactJS
+const ClockDemo = () => {
   // useState returns a pair:
   // the current state value,
   // and a function that lets you update it.
@@ -23,4 +24,4 @@ const HookDemo = () => {
   );
 };
 
-export default HookDemo;
+export default ClockDemo;

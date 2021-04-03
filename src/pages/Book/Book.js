@@ -3,13 +3,13 @@ import Moment from 'react-moment';
 import Table from '../../components/Table/Table';
 import SearchBox from '../../components/Input/SearchBox';
 import Button from '../../components/Button/Button';
-import { ACTION_ADD, ACTION_EDIT } from '../../constants/Constants';
+import { ACTION_ADD, ACTION_EDIT, ROLES } from '../../constants/Constants';
 import BookUpsertModal from './BookUpsertModal';
 import Toast from '../../components/Toast/Toast';
+import ConfirmModal from '../../components/Modal/ConfirmModal';
 import BookService from './BookService';
 import CategoryService from '../Category/CategoryService';
 import './Book.scss';
-import ConfirmModal from '../../components/Modal/ConfirmModal';
 
 class Book extends PureComponent {
   constructor(props) {
@@ -26,7 +26,72 @@ class Book extends PureComponent {
       categoryOptions: [],
       selectedRow: {}
     };
+
+    this.columns = [
+      {
+        Header: 'Title',
+        accessor: 'title'
+      },
+      {
+        Header: 'Author',
+        accessor: 'author'
+      },
+      {
+        Header: 'Category',
+        accessor: 'categoryName',
+        Cell: ({ original }) => original.category.name,
+        sortable: false
+      },
+      {
+        Header: 'Price',
+        accessor: 'price'
+      },
+      {
+        Header: 'Created date',
+        accessor: 'createdDate',
+        Cell: ({ original }) => (
+          <Moment format="HH:mm DD/MM/YYYY">{original.createdDate}</Moment>
+        )
+      },
+      {
+        Header: 'Modified date',
+        accessor: 'modifiedDate',
+        Cell: ({ original }) => (
+          <Moment format="HH:mm DD/MM/YYYY">{original.modifiedDate}</Moment>
+        )
+      }
+    ];
+
+    // Only user has ROLE_BOOK_MANAGER can modify book (create, edit, delete)
+    if (this.isBookManager()) {
+      this.columns.push({
+        Header: 'Action',
+        Cell: ({ original }) => (
+          <div>
+            <i
+              className="fas fa-edit icon-btn-action icon-btn-edit"
+              onClick={() => this.onUpdate(original)}
+            ></i>
+            &nbsp;
+            <i
+              className="fas fa-trash-alt icon-btn-action icon-btn-delete"
+              onClick={() => this.onDelete(original)}
+            ></i>
+          </div>
+        ),
+        width: 80
+      });
+    }
   }
+
+  isBookManager = () => {
+    const { userInfo } = this.props;
+    return (
+      userInfo &&
+      userInfo.roleArray &&
+      userInfo.roleArray.includes(ROLES.ROLE_BOOK_MANAGER)
+    );
+  };
 
   componentDidMount() {
     // get all category for creating new or updating book
@@ -40,9 +105,7 @@ class Book extends PureComponent {
       })
       .catch((err) => {
         console.log(err);
-        this.setState({
-          loading: false
-        });
+        Toast.error(err);
       });
   }
 
@@ -69,6 +132,7 @@ class Book extends PureComponent {
       })
       .catch((err) => {
         console.log(err);
+        Toast.error(err);
         this.setState({
           loading: false
         });
@@ -95,58 +159,6 @@ class Book extends PureComponent {
       });
     }
   };
-
-  columns = [
-    {
-      Header: 'Title',
-      accessor: 'title'
-    },
-    {
-      Header: 'Author',
-      accessor: 'author'
-    },
-    {
-      Header: 'Category',
-      accessor: 'categoryName',
-      Cell: ({ original }) => original.category.name,
-      sortable: false
-    },
-    {
-      Header: 'Price',
-      accessor: 'price'
-    },
-    {
-      Header: 'Created date',
-      accessor: 'createdDate',
-      Cell: ({ original }) => (
-        <Moment format="HH:mm DD/MM/YYYY">{original.createdDate}</Moment>
-      )
-    },
-    {
-      Header: 'Modified date',
-      accessor: 'modifiedDate',
-      Cell: ({ original }) => (
-        <Moment format="HH:mm DD/MM/YYYY">{original.modifiedDate}</Moment>
-      )
-    },
-    {
-      Header: 'Action',
-      Cell: ({ original }) => (
-        <div>
-          <i
-            className="fas fa-edit icon-btn-action icon-btn-edit"
-            onClick={() => this.onUpdate(original)}
-          ></i>
-          &nbsp;
-          <i
-            className="fas fa-trash-alt icon-btn-action icon-btn-delete"
-            onClick={() => this.onDelete(original)}
-          ></i>
-        </div>
-      ),
-      width: 80
-    }
-  ];
 
   onSearch = (obj) => {
     this.getBooks({ searchText: obj.value });
@@ -239,11 +251,13 @@ class Book extends PureComponent {
             <SearchBox name="searchText" onSearch={this.onSearch} />
           </div>
 
-          <Button
-            text="Add new"
-            className="btn-success btn-add-new"
-            onClick={this.onAddNew}
-          />
+          {this.isBookManager() && (
+            <Button
+              text="Add new"
+              className="btn-success btn-add-new"
+              onClick={this.onAddNew}
+            />
+          )}
         </div>
 
         <Table

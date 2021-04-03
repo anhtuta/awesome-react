@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { auth } from './Auth';
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+const PrivateRoute = ({ component: Component, userInfo, ...rest }) => {
   return (
     // Show the component only when the user is logged in
     // Otherwise, redirect the user to /login page
@@ -10,7 +10,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={(props) =>
         auth.isAuthenticated() ? (
-          <Component {...props} />
+          <Component {...props} userInfo={userInfo} />
         ) : (
           <Redirect
             to={{
@@ -25,3 +25,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 };
 
 export default PrivateRoute;
+
+/*
+<Component {...props} userInfo={userInfo} />
+Hiện tại chưa thấy dùng props
+*/

@@ -6,7 +6,6 @@ const ConfirmModal = (props) => {
   const {
     show,
     customClass = '',
-    saveButtonClass = '',
     modalTitle = '',
     bodyMessage = '',
     cancelButtonText = '',

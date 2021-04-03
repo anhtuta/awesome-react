@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Moment from 'react-moment';
 
 const Clock = () => {
   const [date, setDate] = useState(new Date());
-
-  let timerID = null;
+  const timerID = useRef(null);
 
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
-    if (timerID === null) {
-      timerID = setInterval(() => setDate(new Date()), 1000);
+    if (timerID.current === null) {
+      timerID.current = setInterval(() => setDate(new Date()), 1000);
     }
     return () => {
-      clearInterval(timerID);
+      clearInterval(timerID.current);
+      timerID.current = null;
     };
   });
 
