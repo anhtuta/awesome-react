@@ -4,8 +4,6 @@ import { MENU_ITEMS, ROLE_TABLE } from '../../constants/Constants';
 import { auth } from '../Auth/Auth';
 import './Nav.scss';
 
-export const TEMP = 'TEMP';
-
 class Nav extends Component {
   handleLogout = () => {
     auth.logout();
@@ -16,31 +14,13 @@ class Nav extends Component {
       if (item.subItems) {
         this.getActiveMenuItems(roleArray, item.subItems);
       } else {
-        if (!this.rolesHasPermission(roleArray, item.path)) {
+        if (!auth.rolesHasPermission(roleArray, item.path)) {
           // ĐỪNG dùng splice, bởi vì JS bất đồng bộ nên sẽ bị lỗi thỉnh thoảng bị miss menu item
           // menuItems.splice(index, 1);
           item.enabled = false;
         }
       }
     });
-  };
-
-  /**
-   * Check xem mảng roles có tồn tại role nào có quyền truy cập path hay ko
-   * @param {string[]} roles - Array of role
-   * @param {string} path - URL
-   */
-  rolesHasPermission = (roles, path) => {
-    if (!ROLE_TABLE[path]) return true;
-    for (let i = 0; i < roles.length; i++) {
-      if (ROLE_TABLE[path].includes(roles[i])) return true;
-    }
-    // Dùng forEach: bất đồng bộ nên ko được nhé!
-    // Nó sẽ return false trước khi chạy vào trong forEach
-    // roles.forEach(role => {
-    //   if (ROLE_TABLE[path].includes(role)) return true;
-    // });
-    return false;
   };
 
   generateMenu = (menuItems) => {

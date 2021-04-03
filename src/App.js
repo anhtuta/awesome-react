@@ -50,8 +50,18 @@ class App extends Component {
                 component={Loadable.Book}
                 userInfo={userInfo}
               />
-              <PrivateRoute exact path="/staff" component={Loadable.Staff} />
-              <PrivateRoute exact path="/fetch-demo" component={Loadable.FetchDemo} />
+              <PrivateRoute
+                exact
+                path="/staff"
+                component={Loadable.Staff}
+                userInfo={userInfo}
+              />
+              <PrivateRoute
+                exact
+                path="/fetch-demo"
+                component={Loadable.FetchDemo}
+                userInfo={userInfo}
+              />
               <Route path="" component={Loadable.NotFound} />
             </Switch>
           </div>
