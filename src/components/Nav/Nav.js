@@ -4,6 +4,8 @@ import { MENU_ITEMS, ROLE_TABLE } from '../../constants/Constants';
 import { auth } from '../Auth/Auth';
 import './Nav.scss';
 
+export const TEMP = 'TEMP';
+
 class Nav extends Component {
   handleLogout = () => {
     auth.logout();
