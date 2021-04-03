@@ -1,6 +1,7 @@
 import { ACCESS_TOKEN } from '../../constants/Constants';
 import axiosClient from '../../service/axiosClient';
 import Toast from '../Toast/Toast';
+import { TEMP } from '../Nav/Nav';
 
 class Auth {
   constructor() {
