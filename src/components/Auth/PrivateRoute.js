@@ -8,18 +8,32 @@ const PrivateRoute = ({ component: Component, userInfo, ...rest }) => {
     // Otherwise, redirect the user to /login page
     <Route
       {...rest}
-      render={(props) =>
-        auth.isAuthenticated() ? (
-          <Component {...props} userInfo={userInfo} />
-        ) : (
-          <Redirect
-            to={{
-              pathname: '/login',
-              state: { from: props.location }
-            }}
-          />
-        )
-      }
+      render={(props) => {
+        if (!auth.isAuthenticated()) {
+          return (
+            // Chưa login, redirect về trang login
+            <Redirect
+              to={{
+                pathname: '/login',
+                state: { from: props.location }
+              }}
+            />
+          );
+        } else if (
+          userInfo &&
+          !auth.rolesHasPermission(userInfo.roleArray, props.location.pathname)
+        ) {
+          // Đã login nhưng ko có quyền vào trang này
+          return (
+            <div>
+              <h2>Oops! Access denied!</h2>
+              <p>You don't have permission to access this page.</p>
+            </div>
+          );
+        } else {
+          return <Component {...props} userInfo={userInfo} />;
+        }
+      }}
     />
   );
 };
