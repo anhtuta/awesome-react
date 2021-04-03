@@ -37,7 +37,7 @@ class Auth {
       })
       .catch((err) => {
         console.log(err);
-        Toast.error(err.data && err.data.message ? err.data.message : err);
+        Toast.error(err);
       });
   };
 

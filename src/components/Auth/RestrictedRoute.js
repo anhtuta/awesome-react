@@ -16,3 +16,9 @@ const RestrictedRoute = ({ component: Component, ...rest }) => {
 };
 
 export default RestrictedRoute;
+
+/*
+<Component {...props} />:
+Cần truyền các props của Route cho component để nó đọc giá trị location.state.from, dùng để redirect
+(Xem bên component Login)
+*/
