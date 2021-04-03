@@ -79,6 +79,7 @@ export const MENU_ITEMS = [
   }
 ];
 
+// Những URL nào ko có trong này là public URL, role nào cũng access được
 export const ROLE_TABLE = {
   '/book': [ROLES.ROLE_USER],
   '/staff': [ROLES.ROLE_STORE_MANAGER],

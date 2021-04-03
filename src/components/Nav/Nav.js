@@ -23,7 +23,11 @@ class Nav extends Component {
     });
   };
 
-  // Những URL nào ko có trong này tức là public, role nào cũng vào được
+  /**
+   * Check xem mảng roles có tồn tại role nào có quyền truy cập path hay ko
+   * @param {string[]} roles - Array of role
+   * @param {string} path - URL
+   */
   rolesHasPermission = (roles, path) => {
     if (!ROLE_TABLE[path]) return true;
     for (let i = 0; i < roles.length; i++) {
