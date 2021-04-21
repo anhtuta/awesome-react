@@ -85,3 +85,14 @@ export const ROLE_TABLE = {
   '/staff': [ROLES.ROLE_STORE_MANAGER],
   '/fetch-demo': [ROLES.ROLE_USER]
 };
+
+export const STAFF_ALIVE = 1;
+export const STAFF_DEAD = 0;
+
+export const GENDERS = {
+  MALE: 'male',
+  FEMALE: 'female',
+  GAY: 'gay',
+  LESBIAN: 'lesbian',
+  UNKNOWN: 'unknown'
+};

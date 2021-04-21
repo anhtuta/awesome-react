@@ -108,7 +108,7 @@ class BookUpsertModal extends PureComponent {
         <Select
           name="category"
           label="Category"
-          defaultValue={category}
+          defaultOption={category}
           options={categoryOptions}
           isRequire={true}
           onChange={this.handleOnChangeCategory}

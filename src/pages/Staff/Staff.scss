@@ -1,0 +1,18 @@
+.staff-wrapper {
+  .search-section {
+    position: relative;
+
+    .btn-add-new {
+      position: absolute;
+      right: 0;
+    }
+  }
+}
+.staff-modal-wrapper {
+  .vertical-line {
+    border-left: 2px solid #aaa;
+    position: relative;
+    left: 5%;
+    top: 0;
+  }
+}
