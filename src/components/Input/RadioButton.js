@@ -19,7 +19,11 @@ const RadioButton = (props) => {
   const labelClasses = `custom-radio-container ${labelClassName}`;
 
   const onChange = (e) => {
-    props.onChange(e.target.name, e.target.value);
+    props.onChange({
+      name,
+      label,
+      value: e.target.value
+    });
   };
 
   return (
@@ -40,11 +44,4 @@ const RadioButton = (props) => {
   );
 };
 
-/**
- * Note: HTML thì ko cần onChange, nếu click vào checkbox thì nó tự thay đổi
- * (chuyển từ chưa check sang check và ngược lại). Nhưng với React thì ko có
- * thì lúc click sẽ ko thay đổi gì!
- * Note2: class cha dùng component này phải truyền props checked = true/false,
- * nếu ko sẽ ko hoạt động!
- */
 export default RadioButton;

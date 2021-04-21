@@ -1,21 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Checkbox.scss';
 
 /**
  * Ref: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_custom_checkbox
  */
 const Checkbox = (props) => {
-  const { text, name, className = '', checked = false, disabled = false } = props;
-  const classes = `cb ${className}`;
+  const {
+    label,
+    headerLabel,
+    name,
+    className = '',
+    defaultChecked = false,
+    isRequire = false,
+    disabled = false
+  } = props;
+  const classes = `custom-cb-wrapper ${className}`;
+  const [checked, setChecked] = useState(defaultChecked);
 
-  const onChange = (e) => {
-    props.onChange(e.target.name, e.target.checked);
+  const onChange = () => {
+    const newChecked = !checked;
+    setChecked(newChecked);
+
+    // gọi hàm onChange của component cha, param giống như component InputText
+    props.onChange({
+      name,
+      value: newChecked
+    });
   };
 
   return (
     <div className={classes}>
+      {headerLabel && (
+        <label className="input-label">
+          {headerLabel}
+          {isRequire && <span className="input-require">&nbsp;*</span>}
+        </label>
+      )}
       <label className="custom-cb-container">
-        {text}
+        {label}
         <input
           type="checkbox"
           name={name}
