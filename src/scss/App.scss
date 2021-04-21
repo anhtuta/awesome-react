@@ -4,18 +4,6 @@
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
-  .width25 {
-    width: 25%;
-    display: inline-block;
-  }
-  .width50 {
-    width: 50%;
-    display: inline-block;
-  }
-  .width75 {
-    width: 75%;
-    display: inline-block;
-  }
 
   /* Icon button */
   .icon-btn-action {
@@ -27,4 +15,38 @@
   .icon-btn-delete {
     color: red;
   }
+}
+
+/** Width **/
+.width10 {
+  width: 10%;
+  display: inline-block;
+}
+.width20 {
+  width: 20%;
+  display: inline-block;
+}
+.width25 {
+  width: 25%;
+  display: inline-block;
+}
+.width30 {
+  width: 30%;
+  display: inline-block;
+}
+.width50 {
+  width: 50%;
+  display: inline-block;
+}
+.width60 {
+  width: 60%;
+  display: inline-block;
+}
+.width70 {
+  width: 70%;
+  display: inline-block;
+}
+.width75 {
+  width: 75%;
+  display: inline-block;
 }

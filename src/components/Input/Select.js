@@ -7,7 +7,7 @@ const Select = (props) => {
     label,
     placeholder,
     options,
-    defaultValue,
+    defaultOption,
     isDisabled = false,
     isRequire = false,
     isMulti = false,
@@ -38,7 +38,7 @@ const Select = (props) => {
         name={name}
         placeholder={placeholder}
         options={allowSelectAll ? [ALL_OPTION, ...options] : options}
-        defaultValue={defaultValue}
+        defaultValue={defaultOption}
         onChange={onChange}
         isDisabled={isDisabled}
         isMulti={isMulti}
@@ -48,4 +48,23 @@ const Select = (props) => {
   );
 };
 
+/*
+Using example:
+const storeOptions = [
+  {value: 1, label: "Tiki"},
+  {value: 2, label: "Lazada"},
+  {value: 3, label: "Shopee", disabled: true}
+]
+const defaultOption = {
+  {value: 2, label: "Lazada"}
+}
+<Select
+  name="store"
+  label="Working at"
+  defaultOption={defaultOption}
+  options={storeOptions}
+  isRequire={true}
+  onChange={this.handleOnChangeStore}
+/>
+*/
 export default Select;

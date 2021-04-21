@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { MENU_ITEMS, ROLE_TABLE } from '../../constants/Constants';
+import { MENU_ITEMS } from '../../constants/Constants';
 import { auth } from '../Auth/Auth';
 import './Nav.scss';
 

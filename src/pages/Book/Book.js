@@ -178,7 +178,6 @@ class Book extends PureComponent {
   };
 
   onUpdate = (original) => {
-    console.log('original: ', original);
     const selectedRow = {
       id: original.id,
       title: original.title,
@@ -247,7 +246,7 @@ class Book extends PureComponent {
       <div className="book-wrapper">
         <h2>All book</h2>
         <div className="search-section">
-          <div className="width25">
+          <div className="width50">
             <SearchBox name="searchText" onSearch={this.onSearch} />
           </div>
 
