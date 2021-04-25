@@ -1,5 +1,5 @@
 import React from 'react';
-import Loadable from 'react-loadable';
+import loadable from '@loadable/component';
 import LoadingIcon from './LoadingIcon';
 
 const Loading = (props) => {
@@ -24,56 +24,74 @@ const Loading = (props) => {
 
 // Using Loadable is simple. All you need to do is pass in a function which loads
 // your component and a "Loading" component to show while your component loads.
-export const Nav = Loadable({
-  loader: () => import('../../components/Nav/Nav'),
-  loading: Loading,
-  delay: 250
+export const Nav = loadable(() => import('../../components/Nav/Nav'), {
+  fallback: Loading({
+    pastDelay: true,
+    error: false,
+    timedOut: false
+  })
 });
 
-export const About = Loadable({
-  loader: () => import('../../pages/About/About'),
-  loading: Loading,
-  delay: 250 // This delay defaults to 200ms
+export const About = loadable(() => import('../../pages/About/About'), {
+  fallback: Loading({
+    pastDelay: true,
+    error: false,
+    timedOut: false
+  })
 });
 
-export const Book = Loadable({
-  loader: () => import('../../pages/Book/Book'),
-  loading: Loading,
-  delay: 250
+export const Book = loadable(() => import('../../pages/Book/Book'), {
+  fallback: Loading({
+    pastDelay: true,
+    error: false,
+    timedOut: false
+  })
 });
 
-export const Staff = Loadable({
-  loader: () => import('../../pages/Staff/Staff'),
-  loading: Loading,
-  delay: 250
+export const Staff = loadable(() => import('../../pages/Staff/Staff'), {
+  fallback: Loading({
+    pastDelay: true,
+    error: false,
+    timedOut: false
+  })
 });
 
-export const Home = Loadable({
-  loader: () => import('../../pages/Home/Home'),
-  loading: Loading,
-  delay: 250
+export const Home = loadable(() => import('../../pages/Home/Home'), {
+  fallback: Loading({
+    pastDelay: true,
+    error: false,
+    timedOut: false
+  })
 });
 
-export const ClockDemo = Loadable({
-  loader: () => import('../../pages/Demo/ClockDemo'),
-  loading: Loading,
-  delay: 250
+export const ClockDemo = loadable(() => import('../../pages/Demo/ClockDemo'), {
+  fallback: Loading({
+    pastDelay: true,
+    error: false,
+    timedOut: false
+  })
 });
 
-export const FetchDemo = Loadable({
-  loader: () => import('../../pages/Demo/FetchDemo'),
-  loading: Loading,
-  delay: 250
+export const FetchDemo = loadable(() => import('../../pages/Demo/FetchDemo'), {
+  fallback: Loading({
+    pastDelay: true,
+    error: false,
+    timedOut: false
+  })
 });
 
-export const Login = Loadable({
-  loader: () => import('../../pages/Login/Login'),
-  loading: Loading,
-  delay: 250
+export const Login = loadable(() => import('../../pages/Login/Login'), {
+  fallback: Loading({
+    pastDelay: true,
+    error: false,
+    timedOut: false
+  })
 });
 
-export const NotFound = Loadable({
-  loader: () => import('../../pages/NotFound/NotFound'),
-  loading: Loading,
-  delay: 250
+export const NotFound = loadable(() => import('../../pages/NotFound/NotFound'), {
+  fallback: Loading({
+    pastDelay: true,
+    error: false,
+    timedOut: false
+  })
 });
