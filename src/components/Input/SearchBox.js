@@ -94,7 +94,9 @@ class SearchBox extends PureComponent {
             placeholder={placeholder}
             onKeyUp={this.onKeyUp}
           />
-          <i className="fas fa-times input-icon-clear" onClick={this.onClear}></i>
+          {value && (
+            <i className="fas fa-times input-icon-clear" onClick={this.onClear}></i>
+          )}
           {!!errorMsg && <div className="input-error-msg">{errorMsg}</div>}
         </div>
       </div>
