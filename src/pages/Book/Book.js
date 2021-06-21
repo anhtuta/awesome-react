@@ -126,7 +126,6 @@ class Book extends PureComponent {
       .then((res) => {
         this.setState({
           bookData: res.data,
-          totalCount: res.meta,
           loading: false
         });
       })
@@ -149,7 +148,6 @@ class Book extends PureComponent {
       const res = await BookService.getBooks(newParams);
       this.setState({
         bookData: res.data,
-        totalCount: res.meta,
         loading: false
       });
     } catch (err) {
