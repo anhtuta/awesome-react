@@ -65,7 +65,6 @@ class Staff extends PureComponent {
       .then((res) => {
         this.setState({
           staffData: res.data,
-          totalCount: res.meta,
           loading: false
         });
       })
@@ -88,7 +87,6 @@ class Staff extends PureComponent {
       const res = await StaffService.getStaffs(newParams);
       this.setState({
         staffData: res.data,
-        totalCount: res.meta,
         loading: false
       });
     } catch (err) {
