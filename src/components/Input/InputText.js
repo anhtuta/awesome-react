@@ -95,4 +95,10 @@ class InputText extends PureComponent {
   }
 }
 
+/**
+ * Note: class cha dùng component bây giờ không truyền props value,
+ * mà là defaultValue, việc quản lý value cho input được thực hiện trong
+ * component này (thông qua state), component cha ko dính dáng gì,
+ * và khi onChange sẽ truyền ngược value đó cho component cha
+ */
 export default InputText;

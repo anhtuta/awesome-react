@@ -55,7 +55,8 @@ const Checkbox = (props) => {
  * Note: HTML thì ko cần onChange, nếu click vào checkbox thì nó tự thay đổi
  * (chuyển từ chưa check sang check và ngược lại). Nhưng với React thì ko có
  * thì lúc click sẽ ko thay đổi gì!
- * Note2: class cha dùng component này phải truyền props checked = true/false,
- * nếu ko sẽ ko hoạt động!
+ * Note2 (updated): class cha dùng component bây giờ KHÔNG phải truyền props
+ * checked = true/false nữa, vì việc quản lý check đó được thực hiện trong
+ * chính component này
  */
 export default Checkbox;
