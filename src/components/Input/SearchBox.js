@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import './Input.scss';
 
 const DEFAULT_INPUT_MAX_LENGTH = 200;
+const TYPING_INTERVAL = 300;
 
 class SearchBox extends PureComponent {
   constructor(props) {
@@ -12,6 +13,7 @@ class SearchBox extends PureComponent {
       invalid: false,
       focus: false
     };
+    this.typingTimer = null;
   }
 
   onChange = (e) => {
@@ -39,7 +41,15 @@ class SearchBox extends PureComponent {
     if (e.keyCode === 13) {
       // Enter
       this.onSearch(searchText);
+    } else {
+      this.typingTimer = setTimeout(() => {
+        this.onSearch(searchText);
+      }, TYPING_INTERVAL);
     }
+  };
+
+  onKeyDown = () => {
+    clearTimeout(this.typingTimer);
   };
 
   onSearch = () => {
@@ -89,10 +99,11 @@ class SearchBox extends PureComponent {
             disabled={disabled}
             onChange={this.onChange}
             className={
-              'input-text input-text-seach ' + (!!errorMsg ? ' input-error' : '')
+              'input-text input-text-search ' + (!!errorMsg ? ' input-error' : '')
             }
             placeholder={placeholder}
             onKeyUp={this.onKeyUp}
+            onKeyDown={this.onKeyDown}
           />
           {value && (
             <i className="fas fa-times input-icon-clear" onClick={this.onClear}></i>
