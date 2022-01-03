@@ -4,6 +4,7 @@ Project này ko còn là code base nữa, mà chuyển sang [Lili Player Admin](
 ## Note
 - Mọi common components đều xử lý state, update value trong chính nó, và component cha chỉ cần truyền default value là giá trị khởi tạo cho value của common component
 - Sau khi common component update value, nó sẽ gọi method onChange từ component cha truyền cho, để truyền new value nó vừa update cho cha. Component cha KHÔNG dùng value đó để update common component, mà chỉ dùng để lưu vào database
+- This project works on Nodejs version 16.12.0
 
 ## How to run
 - First, we need a backend, please refer to this project: https://github.com/anhtuta/SpringBootTech
