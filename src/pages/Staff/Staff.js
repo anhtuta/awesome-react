@@ -2,12 +2,7 @@ import React, { PureComponent } from 'react';
 import Table from '../../components/Table/Table';
 import SearchBox from '../../components/Input/SearchBox';
 import Button from '../../components/Button/Button';
-import {
-  ACTION_ADD,
-  ACTION_EDIT,
-  STAFF_ALIVE,
-  STAFF_DEAD
-} from '../../constants/Constants';
+import { ACTION_ADD, ACTION_EDIT, STAFF_ALIVE, STAFF_DEAD } from '../../constants/Constants';
 import Toast from '../../components/Toast/Toast';
 import StaffUpsertModal from './StaffUpsertModal';
 import ConfirmModal from '../../components/Modal/ConfirmModal';
@@ -50,9 +45,7 @@ class Staff extends PureComponent {
 
   getStaffs = (params) => {
     this.setState({ loading: true });
-    const sort = params.sortBy
-      ? params.sortBy + ',' + params.sortOrder
-      : this.state.params.sort;
+    const sort = params.sortBy ? params.sortBy + ',' + params.sortOrder : this.state.params.sort;
     const newParams = {
       ...this.state.params,
       ...params,
@@ -150,13 +143,15 @@ class Staff extends PureComponent {
       Cell: ({ original }) => (
         <div>
           <i
-            className="fas fa-edit icon-btn-action icon-btn-edit"
+            className="fa fa-pencil-square icon-btn-action icon-btn-edit"
             onClick={() => this.onUpdate(original)}
+            title="Edit staff"
           ></i>
           &nbsp;
           <i
-            className="fas fa-trash-alt icon-btn-action icon-btn-delete"
+            className="fa fa-trash icon-btn-action icon-btn-delete"
             onClick={() => this.onDelete(original)}
+            title="Delete staff"
           ></i>
         </div>
       ),
@@ -248,11 +243,7 @@ class Staff extends PureComponent {
           <div className="width50">
             <SearchBox name="searchText" onSearch={this.onSearch} />
           </div>
-          <Button
-            text="Add new"
-            className="btn-success btn-add-new"
-            onClick={this.onAddNew}
-          />
+          <Button text="Add new" className="btn-success btn-add-new" onClick={this.onAddNew} />
         </div>
 
         <Table

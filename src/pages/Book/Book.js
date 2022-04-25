@@ -39,7 +39,7 @@ class Book extends PureComponent {
       {
         Header: 'Category',
         accessor: 'categoryName',
-        Cell: ({ original }) => original.category.name,
+        Cell: ({ original }) => (original.categoryNames ? original.categoryNames.join(', ') : ''),
         sortable: false
       },
       {
@@ -49,16 +49,12 @@ class Book extends PureComponent {
       {
         Header: 'Created date',
         accessor: 'createdDate',
-        Cell: ({ original }) => (
-          <Moment format="HH:mm DD/MM/YYYY">{original.createdDate}</Moment>
-        )
+        Cell: ({ original }) => <Moment format="HH:mm DD/MM/YYYY">{original.createdDate}</Moment>
       },
       {
         Header: 'Modified date',
         accessor: 'modifiedDate',
-        Cell: ({ original }) => (
-          <Moment format="HH:mm DD/MM/YYYY">{original.modifiedDate}</Moment>
-        )
+        Cell: ({ original }) => <Moment format="HH:mm DD/MM/YYYY">{original.modifiedDate}</Moment>
       }
     ];
 
@@ -69,13 +65,15 @@ class Book extends PureComponent {
         Cell: ({ original }) => (
           <div>
             <i
-              className="fas fa-edit icon-btn-action icon-btn-edit"
+              className="fa fa-pencil-square icon-btn-action icon-btn-edit"
               onClick={() => this.onUpdate(original)}
+              title="Edit book"
             ></i>
             &nbsp;
             <i
-              className="fas fa-trash-alt icon-btn-action icon-btn-delete"
+              className="fa fa-trash icon-btn-action icon-btn-delete"
               onClick={() => this.onDelete(original)}
+              title="Delete book"
             ></i>
           </div>
         ),
@@ -86,11 +84,7 @@ class Book extends PureComponent {
 
   isBookManager = () => {
     const { userInfo } = this.props;
-    return (
-      userInfo &&
-      userInfo.roleArray &&
-      userInfo.roleArray.includes(ROLES.ROLE_BOOK_MANAGER)
-    );
+    return userInfo && userInfo.roleArray && userInfo.roleArray.includes(ROLES.ROLE_BOOK_MANAGER);
   };
 
   componentDidMount() {
@@ -111,9 +105,7 @@ class Book extends PureComponent {
 
   getBooks = (params) => {
     this.setState({ loading: true });
-    const sort = params.sortBy
-      ? params.sortBy + ',' + params.sortOrder
-      : this.state.params.sort;
+    const sort = params.sortBy ? params.sortBy + ',' + params.sortOrder : this.state.params.sort;
     const newParams = {
       ...this.state.params,
       ...params,
@@ -180,7 +172,7 @@ class Book extends PureComponent {
       id: original.id,
       title: original.title,
       author: original.author,
-      category: this.getCategoryOptionById(original.category.id),
+      category: null, //this.getCategoryOptionById(original.category.id),
       price: original.price
     };
     this.setState({
@@ -249,11 +241,7 @@ class Book extends PureComponent {
           </div>
 
           {this.isBookManager() && (
-            <Button
-              text="Add new"
-              className="btn-success btn-add-new"
-              onClick={this.onAddNew}
-            />
+            <Button text="Add new" className="btn-success btn-add-new" onClick={this.onAddNew} />
           )}
         </div>
 

@@ -1,7 +1,7 @@
 import axiosClient from '../../service/axiosClient';
 
 const getBooks = (params) => {
-  return axiosClient.get('/api/book', { params });
+  return axiosClient.get('/api/book/detail', { params });
 };
 
 const createBook = (data) => {
