@@ -7,6 +7,7 @@ import RestrictedRoute from './components/Auth/RestrictedRoute';
 import * as Loadable from './components/Loadable/Loadable';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './scss/App.scss';
+import 'font-awesome/css/font-awesome.min.css';
 
 class App extends Component {
   constructor(props) {
@@ -44,18 +45,8 @@ class App extends Component {
               <Route exact path="/clock-demo" component={Loadable.ClockDemo} />
               <Route exact path="/about" component={Loadable.About} />
               <RestrictedRoute exact path="/login" component={Loadable.Login} />
-              <PrivateRoute
-                exact
-                path="/book"
-                component={Loadable.Book}
-                userInfo={userInfo}
-              />
-              <PrivateRoute
-                exact
-                path="/staff"
-                component={Loadable.Staff}
-                userInfo={userInfo}
-              />
+              <PrivateRoute exact path="/book" component={Loadable.Book} userInfo={userInfo} />
+              <PrivateRoute exact path="/staff" component={Loadable.Staff} userInfo={userInfo} />
               <PrivateRoute
                 exact
                 path="/fetch-demo"
