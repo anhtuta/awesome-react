@@ -21,9 +21,7 @@ class InputText extends PureComponent {
 
   onChange = (e) => {
     const { value } = e.target;
-    const maxLength = this.props.maxLength
-      ? this.props.maxLength
-      : DEFAULT_INPUT_MAX_LENGTH;
+    const maxLength = this.props.maxLength ? this.props.maxLength : DEFAULT_INPUT_MAX_LENGTH;
     let errorMsg = '';
 
     if (value.length > maxLength) {
@@ -61,24 +59,27 @@ class InputText extends PureComponent {
     const {
       name,
       label,
+      className = '',
       disabled = false,
       isRequire = false,
       type = 'text',
+      maxLength = '',
       placeholder
     } = this.props;
 
     const { value, errorMsg } = this.state;
 
     return (
-      <div className="input-wrapper">
+      <div className={`input-wrapper ${className}`}>
         {label && (
-          <label className="input-label">
+          <label className="input-label" htmlFor={`id-txt-${name}`}>
             {label}
             {isRequire && <span className="input-require">&nbsp;*</span>}
           </label>
         )}
         <div className="input-text-wrapper">
           <input
+            id={`id-txt-${name}`}
             type={type}
             name={name}
             value={value}
@@ -87,6 +88,7 @@ class InputText extends PureComponent {
             className={'input-text' + (!!errorMsg ? ' input-error' : '')}
             placeholder={placeholder}
             onKeyPress={this.onKeyPress}
+            maxLength={maxLength}
           />
           {!!errorMsg && <div className="input-error-msg">{errorMsg}</div>}
         </div>
@@ -95,10 +97,4 @@ class InputText extends PureComponent {
   }
 }
 
-/**
- * Note: class cha dùng component bây giờ không truyền props value,
- * mà là defaultValue, việc quản lý value cho input được thực hiện trong
- * component này (thông qua state), component cha ko dính dáng gì,
- * và khi onChange sẽ truyền ngược value đó cho component cha
- */
 export default InputText;

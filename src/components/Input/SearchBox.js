@@ -18,17 +18,13 @@ class SearchBox extends PureComponent {
 
   onChange = (e) => {
     const { value } = e.target;
-    const maxLength = this.props.maxLength
-      ? this.props.maxLength
-      : DEFAULT_INPUT_MAX_LENGTH;
+    const maxLength = this.props.maxLength ? this.props.maxLength : DEFAULT_INPUT_MAX_LENGTH;
     let errorMsg = '';
 
     if (value.length > maxLength) {
       errorMsg = 'Max length of search text is: ' + maxLength;
     } else if (!this.regexValidation(value)) {
-      errorMsg = this.props.regexErrorMsg
-        ? this.props.regexErrorMsg
-        : 'Search text is invalid';
+      errorMsg = this.props.regexErrorMsg ? this.props.regexErrorMsg : 'Search text is invalid';
     }
 
     this.setState({
@@ -91,23 +87,19 @@ class SearchBox extends PureComponent {
           </label>
         )}
         <div className="input-search-wrapper">
-          <i className="fas fa-search input-icon-search" onClick={this.onSearch}></i>
+          <i className="fa fa-search input-icon-search" onClick={this.onSearch}></i>
           <input
             type={type}
             name={name}
             value={value}
             disabled={disabled}
             onChange={this.onChange}
-            className={
-              'input-text input-text-search ' + (!!errorMsg ? ' input-error' : '')
-            }
+            className={'input-text input-text-search ' + (!!errorMsg ? ' input-error' : '')}
             placeholder={placeholder}
             onKeyUp={this.onKeyUp}
             onKeyDown={this.onKeyDown}
           />
-          {value && (
-            <i className="fas fa-times input-icon-clear" onClick={this.onClear}></i>
-          )}
+          {value && <i className="fa fa-times input-icon-clear" onClick={this.onClear}></i>}
           {!!errorMsg && <div className="input-error-msg">{errorMsg}</div>}
         </div>
       </div>

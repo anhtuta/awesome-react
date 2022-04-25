@@ -14,8 +14,7 @@ const RadioButton = (props) => {
     checked = false,
     disabled = false
   } = props;
-  const classes =
-    `custom-radio-wrapper ${className}` + (disabled ? ' custom-radio-disabled' : '');
+  const classes = `custom-radio-wrapper ${className}` + (disabled ? ' custom-radio-disabled' : '');
   const labelClasses = `custom-radio-container ${labelClassName}`;
 
   const onChange = (e) => {
