@@ -5,9 +5,10 @@ const Select = (props) => {
   const {
     name,
     label,
+    className = '',
     placeholder,
     options,
-    defaultOption,
+    defaultValue,
     isDisabled = false,
     isRequire = false,
     isMulti = false,
@@ -21,15 +22,22 @@ const Select = (props) => {
   };
 
   const onChange = (selected) => {
-    props.onChange({
-      name,
-      label: selected.label,
-      value: selected.value
-    });
+    if (isMulti) {
+      props.onChange({
+        name,
+        selected
+      });
+    } else {
+      props.onChange({
+        name,
+        label: selected.label,
+        value: selected.value
+      });
+    }
   };
 
   return (
-    <div className="input-wrapper select-wrapper">
+    <div className={`input-wrapper select-wrapper ${className}`}>
       <label className="input-label">
         {label}
         {isRequire && <span className="input-require">&nbsp;*</span>}
@@ -38,7 +46,7 @@ const Select = (props) => {
         name={name}
         placeholder={placeholder}
         options={allowSelectAll ? [ALL_OPTION, ...options] : options}
-        defaultValue={defaultOption}
+        defaultValue={defaultValue}
         onChange={onChange}
         isDisabled={isDisabled}
         isMulti={isMulti}
