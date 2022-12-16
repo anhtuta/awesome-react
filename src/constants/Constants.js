@@ -10,6 +10,8 @@ export const ROLES = {
   ROLE_BOOK_MANAGER: 'BOOK_MANAGER'
 };
 
+// việc set enabled sẽ dựa vào permission của từng user. Sau khi login,
+// nếu user ko có quyền xem menu nào, thì sẽ set enabled = false
 export const MENU_ITEMS = [
   {
     name: 'Home',
@@ -69,6 +71,30 @@ export const MENU_ITEMS = [
             name: 'Fetch Demo',
             path: '/fetch-demo',
             key: 'fetchDemo',
+            level: 3,
+            enabled: true,
+            subItems: null
+          },
+          {
+            name: 'CounterFC',
+            path: '/counter-fc',
+            key: 'counterFC',
+            level: 3,
+            enabled: true,
+            subItems: null
+          },
+          {
+            name: 'CounterCC',
+            path: '/counter-cc',
+            key: 'counterCC',
+            level: 3,
+            enabled: true,
+            subItems: null
+          },
+          {
+            name: 'CounterFCCallback',
+            path: '/counter-fc-callback',
+            key: 'counterFCCallback',
             level: 3,
             enabled: true,
             subItems: null

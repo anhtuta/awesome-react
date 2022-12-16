@@ -80,6 +80,30 @@ export const FetchDemo = loadable(() => import('../../pages/Demo/FetchDemo'), {
   })
 });
 
+export const CounterFC = loadable(() => import('../../pages/Demo/CounterFC'), {
+  fallback: Loading({
+    pastDelay: true,
+    error: false,
+    timedOut: false
+  })
+});
+
+export const CounterCC = loadable(() => import('../../pages/Demo/CounterCC'), {
+  fallback: Loading({
+    pastDelay: true,
+    error: false,
+    timedOut: false
+  })
+});
+
+export const CounterFCCallback = loadable(() => import('../../pages/Demo/CounterFCCallback'), {
+  fallback: Loading({
+    pastDelay: true,
+    error: false,
+    timedOut: false
+  })
+});
+
 export const Login = loadable(() => import('../../pages/Login/Login'), {
   fallback: Loading({
     pastDelay: true,
