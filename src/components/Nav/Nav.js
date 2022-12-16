@@ -15,12 +15,17 @@ class Nav extends Component {
         this.getActiveMenuItems(roleArray, item.subItems);
       } else {
         if (!auth.rolesHasPermission(roleArray, item.path)) {
+          // console.log(`User don't have permission to access path: ${item.path}`);
           // ĐỪNG dùng splice, bởi vì JS bất đồng bộ nên sẽ bị lỗi thỉnh thoảng bị miss menu item
           // menuItems.splice(index, 1);
           item.enabled = false;
+        } else {
+          // Fix lỗi ở dưới comment của hàm render
+          item.enabled = true;
         }
       }
     });
+    return menuItems;
   };
 
   generateMenu = (menuItems) => {
@@ -62,9 +67,15 @@ class Nav extends Component {
 
   render() {
     const { userInfo } = this.props;
+    // console.log('userInfo', userInfo);
     const roleArray = userInfo ? userInfo.roleArray : [];
     const menuItems = [...MENU_ITEMS];
+    // console.log('menuItems before: ', JSON.stringify(menuItems));
     this.getActiveMenuItems(roleArray, menuItems);
+    // console.log('menuItems after: ', JSON.stringify(menuItems));
+    // Tại sao MENU_ITEMS lại bị thay đổi giống với menuItems? Để rồi mỗi lần re-render, menuItems tuy lấy giá trị mới
+    // từ MENU_ITEMS nhưng menuItems vẫn = với giá trị của nó ở lần render trước đó (sau khi thự thi getActiveMenuItems)
+    // console.log('MENU_ITEMS now : ', JSON.stringify(MENU_ITEMS));
 
     return (
       <nav className="custom-navbar">
