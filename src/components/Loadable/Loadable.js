@@ -104,6 +104,14 @@ export const CounterFCCallback = loadable(() => import('../../pages/Demo/Counter
   })
 });
 
+export const CustomHookDemo = loadable(() => import('../../pages/Demo/CustomHook/CustomHookDemo'), {
+  fallback: Loading({
+    pastDelay: true,
+    error: false,
+    timedOut: false
+  })
+});
+
 export const Login = loadable(() => import('../../pages/Login/Login'), {
   fallback: Loading({
     pastDelay: true,

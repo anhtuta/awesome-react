@@ -56,6 +56,7 @@ class App extends Component {
               <Route exact path="/counter-fc" component={Loadable.CounterFC} />
               <Route exact path="/counter-cc" component={Loadable.CounterCC} />
               <Route exact path="/counter-fc-callback" component={Loadable.CounterFCCallback} />
+              <Route exact path="/custom-hook-demo" component={Loadable.CustomHookDemo} />
               <Route path="" component={Loadable.NotFound} />
             </Switch>
           </div>

@@ -28,7 +28,7 @@
     "sass": "^1.45.2"
   },
   "scripts": {
-    "start": "set PORT=3002 && react-scripts start",
+    "start": "set PORT=3002 && react-scripts --openssl-legacy-provider start",
     "build": "react-scripts build",
     "build:stg": "env-cmd -f .env.stg react-scripts build",
     "build:prd": "env-cmd -f .env.prd react-scripts build",

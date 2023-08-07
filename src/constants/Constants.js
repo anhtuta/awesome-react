@@ -98,6 +98,14 @@ export const MENU_ITEMS = [
             level: 3,
             enabled: true,
             subItems: null
+          },
+          {
+            name: 'CustomHookDemo',
+            path: '/custom-hook-demo',
+            key: 'customHookDemo',
+            level: 3,
+            enabled: true,
+            subItems: null
           }
         ]
       }
