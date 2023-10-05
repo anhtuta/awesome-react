@@ -9,6 +9,7 @@ const CustomHookDemo = () => {
   const color1 = useMagicColor();
   const color2 = useMagicColor2();
 
+  console.log('Rendering CustomHookDemo');
   return (
     <div>
       <h2>My awesome clock</h2>

@@ -112,6 +112,25 @@ export const CustomHookDemo = loadable(() => import('../../pages/Demo/CustomHook
   })
 });
 
+export const MagicColor = loadable(() => import('../../pages/Demo/CustomHook/MagicColor'), {
+  fallback: Loading({
+    pastDelay: true,
+    error: false,
+    timedOut: false
+  })
+});
+
+export const ParentMagicColor = loadable(
+  () => import('../../pages/Demo/CustomHook/ParentMagicColor'),
+  {
+    fallback: Loading({
+      pastDelay: true,
+      error: false,
+      timedOut: false
+    })
+  }
+);
+
 export const Login = loadable(() => import('../../pages/Login/Login'), {
   fallback: Loading({
     pastDelay: true,

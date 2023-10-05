@@ -57,6 +57,8 @@ class App extends Component {
               <Route exact path="/counter-cc" component={Loadable.CounterCC} />
               <Route exact path="/counter-fc-callback" component={Loadable.CounterFCCallback} />
               <Route exact path="/custom-hook-demo" component={Loadable.CustomHookDemo} />
+              <Route exact path="/magic-color" component={Loadable.MagicColor} />
+              <Route exact path="/parent-magic-color" component={Loadable.ParentMagicColor} />
               <Route path="" component={Loadable.NotFound} />
             </Switch>
           </div>

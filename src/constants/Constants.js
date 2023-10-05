@@ -106,6 +106,22 @@ export const MENU_ITEMS = [
             level: 3,
             enabled: true,
             subItems: null
+          },
+          {
+            name: 'MagicColor',
+            path: '/magic-color',
+            key: 'magicColor',
+            level: 3,
+            enabled: true,
+            subItems: null
+          },
+          {
+            name: 'ParentMagicColor',
+            path: '/parent-magic-color',
+            key: 'parentMagicColor',
+            level: 3,
+            enabled: true,
+            subItems: null
           }
         ]
       }
